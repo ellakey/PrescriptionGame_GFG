@@ -8,7 +8,18 @@ public class MoveCollected : MonoBehaviour
     public float y;
     public float speed;
     private bool spawned;
-    Vector2 direction;
+    private Vector2 direction;
+
+    private void Start()
+    {
+        spawned = false;
+        //Move();
+        StartCoroutine(spawn());
+        // if (spawned && direction.x < 2 && direction.y < 2 && direction.x > -2 && direction.y > -2)
+        // {
+        //     StartCoroutine(despawn());
+        // }
+    }
 
     private void Move()
     {
@@ -23,7 +34,7 @@ public class MoveCollected : MonoBehaviour
     private void Update()
     {
         Move();
-        StartCoroutine(spawn());
+        // StartCoroutine(spawn());
         if (spawned && direction.x < 2 && direction.y < 2 && direction.x > -2 && direction.y > -2)
         {
             StartCoroutine(despawn());
