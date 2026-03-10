@@ -210,7 +210,7 @@ public class DragBehavior : MonoBehaviour
             dragged[i].setAdded(false);
         }
         dragged.Clear();
-        line.positionCount = 0;
+        if(line != null) line.positionCount = 0;
     }
 
     public void onDown()

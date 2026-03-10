@@ -20,7 +20,7 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         instance = this;
-        GameState.Instance?.InitItems(holder.getSize());
+        if(GameState.Instance != null && holder != null) GameState.Instance.InitItems(holder.getSize());
 
         if (isInventory)
         {
