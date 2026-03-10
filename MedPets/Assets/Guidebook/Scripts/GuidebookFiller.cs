@@ -9,6 +9,9 @@ public class GuidebookFiller : MonoBehaviour
     public GameObject prefab;
     public List<GameObject> prefabHolder;
     public bool changing;
+    public Image plusButtonImage;
+    public Sprite plusSprite;
+    public Sprite checkSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -65,10 +68,12 @@ public class GuidebookFiller : MonoBehaviour
         if (changing)
         {
             changing = false;
+            plusButtonImage.sprite = plusSprite;
         }
         else
         {
             changing = true;
+            plusButtonImage.sprite = checkSprite;
         }
     }
 }
