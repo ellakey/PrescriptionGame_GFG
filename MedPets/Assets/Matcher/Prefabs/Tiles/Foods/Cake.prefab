@@ -91,9 +91,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bdb50dcd8e22974ea5752835aa3e334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 8b6a5f765ee85434699b0122e0096c38, type: 2}
   name: Cake
-  description: Cake
-  description2: 
+  descriptionTextLines: 
   id: 5
   tags:
   - Food

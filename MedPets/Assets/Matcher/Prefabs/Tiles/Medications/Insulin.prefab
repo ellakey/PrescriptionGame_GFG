@@ -91,10 +91,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bdb50dcd8e22974ea5752835aa3e334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: ca219af9529824b35914b6f01ebf01d2, type: 2}
   name: Insulin
-  description: Insulin helps disperse glucose and lower your blood sugar levels!
-  description2: If your pet has eaten a lot of sugars or carbs, this can help lower
-    their blood sugar levels back down.
   descriptionTextLines: 3700000038000000
   id: 0
   tags:

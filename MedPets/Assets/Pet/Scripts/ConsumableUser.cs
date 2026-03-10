@@ -15,6 +15,13 @@ public class ConsumableUser : MonoBehaviour
 
     public void useItem()
     {
+        if(!item.GetComponent<Berry>().data.hasBeenUsed)
+        {
+            // has never been used before
+            // popup here
+            item.GetComponent<Berry>().data.Use();
+        }
+
         petAnim.SetTrigger("Eating");
         //audio.Play();
         NeedsController.ChangeFood((int)item.GetComponent<Berry>().foodAmount);

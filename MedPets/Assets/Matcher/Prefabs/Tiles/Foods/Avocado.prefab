@@ -91,9 +91,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bdb50dcd8e22974ea5752835aa3e334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 17c95ffea0cb540799567b3adcc6ca30, type: 2}
   name: Avocado
-  description: Avocado
-  description2: 
+  descriptionTextLines: 
   id: 6
   tags:
   - Food

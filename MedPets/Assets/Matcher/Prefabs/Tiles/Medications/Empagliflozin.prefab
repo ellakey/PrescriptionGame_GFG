@@ -92,9 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bdb50dcd8e22974ea5752835aa3e334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 0778e900c5103415584ef4c19922a188, type: 2}
   name: 'Empagliflozin '
-  description: Empagliflozin
-  description2: Empagliflozin
   descriptionTextLines: 390000003a000000
   id: 10
   tags:

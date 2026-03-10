@@ -226,10 +226,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bdb50dcd8e22974ea5752835aa3e334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 96017c8d057cf4500af9522d47ccd088, type: 2}
   name: Dapagliflozin
-  description: Dapagliflozin helps lower your blood sugar levels!
-  description2: If your pet has eaten a lot of sugars or carbs, this can help lower
-    their blood sugar levels back down.
   descriptionTextLines: 390000003a000000
   id: 4
   tags:

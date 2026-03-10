@@ -92,10 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bdb50dcd8e22974ea5752835aa3e334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: bfdedd442f068425784e2ed99cfae13c, type: 2}
   name: Glimepiride
-  description: Glimepiride helps lower your blood sugar levels!
-  description2: If your pet has eaten a lot of sugars or carbs, this can help lower
-    their blood sugar levels back down.
   descriptionTextLines: 390000003a000000
   id: 3
   tags:

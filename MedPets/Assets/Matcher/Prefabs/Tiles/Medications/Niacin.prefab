@@ -92,11 +92,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bdb50dcd8e22974ea5752835aa3e334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 0}
   name: Niacin (Vitamin B3)
-  description: 'Niacin is a vitamin supplement for nervous system, digestive system,
-    and skin health. '
-  description2: Your pet should NOT take Niacin with any other medications, as it
-    has not been approved by their doctor.
+  descriptionTextLines: 
   id: 12
   tags:
   - Medication

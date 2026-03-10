@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Inventory : MonoBehaviour
 {
@@ -10,6 +11,12 @@ public class Inventory : MonoBehaviour
     public bool isInventory;
     public GameObject itemPrefab;
     public BerryHolder holder;
+
+    [Header("New Item Popup")]
+    public GameObject newItemPopup;
+    public TextMeshProUGUI newItemText;
+    public TextMeshProUGUI newItemDescription;
+    public Image newItemImage;
 
 
     private void Start()
@@ -37,5 +44,18 @@ public class Inventory : MonoBehaviour
                 current.GetComponent<ItemController>().GetComponent<ConsumableUser>().item = holder.getBerry(i);
             }
         }
+    }
+
+    public void ShowNewItemPopup(Berry berry)
+    {
+        newItemText.text = berry.getName();
+        newItemDescription.text = berry.getDescription();
+        newItemImage.sprite = berry.GetComponent<Image>().sprite;
+        newItemPopup.SetActive(true);
+    }
+
+    public void CloseNewItemPopup()
+    {
+        newItemPopup.SetActive(false);
     }
 }

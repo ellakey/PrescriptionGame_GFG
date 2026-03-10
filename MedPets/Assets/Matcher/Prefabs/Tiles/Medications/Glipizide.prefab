@@ -226,10 +226,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bdb50dcd8e22974ea5752835aa3e334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 1b1fd1e4a5dae4412a6024081dd412d1, type: 2}
   name: GlipiZide
-  description: GlipiZide helps lower your blood sugar levels!!
-  description2: If your pet has eaten a lot of sugars or carbs, this can help lower
-    their blood sugar levels back down.
   descriptionTextLines: 390000003a000000
   id: 2
   tags:

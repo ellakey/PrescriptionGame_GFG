@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Berry : MonoBehaviour
 {
+    public BerryData data;
     [SerializeField] new string name;
     //[SerializeField] string description;
     //[SerializeField] string description2;
@@ -24,6 +25,11 @@ public class Berry : MonoBehaviour
     public float bloodAmount;
     public float energyAmount;
     [SerializeField] private bool added = false;
+
+    void Start()
+    {
+        data.name = name;
+    }
 
 
     //No Gravity Constructor
@@ -111,5 +117,15 @@ public class Berry : MonoBehaviour
     public string[] getRequiredTags()
     {
         return requiredTags;
+    }
+
+    public string getDataName()
+    {
+        return data.name;
+    }
+
+    public string getDataDescription()
+    {
+        return data.description;
     }
 }

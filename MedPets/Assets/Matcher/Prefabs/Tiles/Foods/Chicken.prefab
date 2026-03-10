@@ -91,9 +91,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bdb50dcd8e22974ea5752835aa3e334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: a07bd028b3d4347668795dd9e39d1297, type: 2}
   name: Chicken
-  description: Chicken
-  description2: 
+  descriptionTextLines: 
   id: 8
   tags:
   - Food

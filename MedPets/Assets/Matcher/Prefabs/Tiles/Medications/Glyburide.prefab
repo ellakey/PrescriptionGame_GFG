@@ -92,9 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bdb50dcd8e22974ea5752835aa3e334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 73f165e3dfcff410a96745afd7ddbd29, type: 2}
   name: Glyburide
-  description: Glyburide
-  description2: Glyburide
   descriptionTextLines: 390000003a000000
   id: 11
   tags:
