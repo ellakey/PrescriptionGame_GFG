@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Central singleton that owns all persistent player/game data.
 /// Lives across scenes via DontDestroyOnLoad or is re-created on each scene load.
 /// Every other script reads/writes through GameState.Instance instead of scattered statics.
+/// Handles auto-load on startup and auto-save on scene transitions and app pause.
 /// </summary>
 public class GameState : MonoBehaviour
 {
@@ -44,9 +46,38 @@ public class GameState : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        // Auto-load saved data on startup
+        SaveSystem.LoadPet();
     }
 
-    // --- Patient Info helpers ---
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Auto-save when transitioning between scenes
+        SaveSystem.SavePet();
+    }
+
+    private void OnApplicationPause(bool paused)
+    {
+        if (paused) SaveSystem.SavePet();
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveSystem.SavePet();
+    }
+
+    // --- Patient Info helpers (moved from static PatientInfo) ---
 
     public void SetMedId(int id)
     {
@@ -82,7 +113,7 @@ public class GameState : MonoBehaviour
         SaveSystem.SavePet();
     }
 
-    // --- Needs helpers ---
+    // --- Needs helpers (moved from NeedsController statics) ---
 
     public void ChangeFood(int amount)
     {
