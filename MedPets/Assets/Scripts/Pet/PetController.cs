@@ -5,6 +5,11 @@ using UnityEngine;
 public class PetController : MonoBehaviour
 {
     public Animator petAnimator;
+
+    [Header("Sprite Swapping (optional)")]
+    public SpriteRenderer petSprite;
+    public Sprite happySprite;
+    public Sprite hungrySprite;
  
     public void Bored()
     {
@@ -31,5 +36,11 @@ public class PetController : MonoBehaviour
     public void HighBloodSugar()
     {
         petAnimator.SetTrigger("HighBloodSugar");
+    }
+
+    public void UpdateSprite(float food)
+    {
+        if (petSprite == null) return;
+        petSprite.sprite = (food >= 50) ? happySprite : hungrySprite;
     }
 }

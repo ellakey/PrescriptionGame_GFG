@@ -31,7 +31,16 @@ public class GameGrid : MonoBehaviour
 
     private void Start()
     {
-        //INITIAL SETUP FOR BOARD SIZE AND FILLING
+        // Reset match session state (previously in Reset.cs)
+        score = 0;
+        if (DragBehavior.itemCounts != null)
+        {
+            for (int i = 0; i < DragBehavior.itemCounts.Length; i++)
+            {
+                DragBehavior.itemCounts[i] = 0;
+            }
+        }
+
         PatientInfo.setId(PatientInfo.medId);
         berries = progression.getProgression();
         board = new GameObject[width, height];

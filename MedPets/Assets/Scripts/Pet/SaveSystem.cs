@@ -55,6 +55,9 @@ public static class SaveSystem
         gs.petName = PlayerPrefs.GetString("PetName", gs.petName);
         gs.language = PlayerPrefs.GetInt("Language", gs.language);
 
+        // Clear before loading — AddMedication is a toggle, so calling it
+        // on meds already in the list would remove them instead of adding them.
+        gs.medications.Clear();
         for (int i = 0; i < medAmount; i++)
         {
             gs.AddMedication(PlayerPrefs.GetInt("Med" + i, 0));

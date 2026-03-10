@@ -73,5 +73,7 @@ public class NeedsController : MonoBehaviour
         {
             controller.Happy();
         }
+
+        controller.UpdateSprite(gs.food);
     }
 }

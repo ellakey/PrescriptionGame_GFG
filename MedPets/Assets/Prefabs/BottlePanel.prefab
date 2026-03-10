@@ -733,7 +733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 7135782115794638413}
-  continuous: 0
+  continuous: 1
 --- !u!1 &2634944186109925071
 GameObject:
   m_ObjectHideFlags: 0
