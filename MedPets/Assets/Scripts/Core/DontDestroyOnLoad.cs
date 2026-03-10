@@ -14,7 +14,7 @@ public class DontDestroyOnLoad : MonoBehaviour
     {
         GameObject[] objs = GameObject.FindGameObjectsWithTag("sfx");
 
-        if (objs.Length > 2)
+        if (objs.Length > 1)
         {
             Destroy(objs[0]);
         }
