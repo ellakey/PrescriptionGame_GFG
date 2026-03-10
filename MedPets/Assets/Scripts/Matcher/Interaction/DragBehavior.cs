@@ -170,7 +170,7 @@ public class DragBehavior : MonoBehaviour
         else
         {
             ClearAdded();
-            wrongaudio.Play();
+            if(wrongaudio != null) wrongaudio.Play();
         }
         ClearAdded();
     }
