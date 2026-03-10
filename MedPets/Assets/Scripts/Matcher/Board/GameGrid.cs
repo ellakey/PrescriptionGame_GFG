@@ -1,14 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Serialization;
-using Unity.VisualScripting;
 using UnityEngine;
 using TMPro;
 
 public class GameGrid : MonoBehaviour
 {
-    //need fixing
-    //Replace Object with Berry Class
     [SerializeField] BerryHolder holder;
     [SerializeField] BerryMover mover;
     [SerializeField] Transform parent;
@@ -21,12 +15,16 @@ public class GameGrid : MonoBehaviour
     public static int score;
     public TextMeshProUGUI scoretext;
 
-    public GameGrid(int w, int h)
+    public int Width
     {
-        //Initialize the Board with size width, height. Height is at the bottom 0 is at the top.
-        board = new GameObject[width, height];
-        width = w;
-        height = h;
+        get => width;
+        set => width = value;
+    }
+
+    public int Height
+    {
+        get => height;
+        set => height = value;
     }
 
     private void Start()
@@ -41,32 +39,13 @@ public class GameGrid : MonoBehaviour
             }
         }
 
-        PatientInfo.setId(PatientInfo.medId);
-        berries = progression.getProgression();
+        PatientInfo.SetId(PatientInfo.MedId);
+        berries = progression.GetProgression();
         board = new GameObject[width, height];
-        fillBoard(berries);
+        FillBoard(berries);
     }
 
-    void fillBoard(int[] ids)
-    {
-        for(int x = 0; x < width; x++)
-        {
-            for (int y = height - 1; y >= 0; y--)
-            {
-                if (board[x, y] == null)
-                {
-                    board[x, y] = Instantiate(holder.getBerry(ids[Random.Range(0, ids.Length)]), new Vector2(mover.conX(x), (mover.conY(y)) + 400), Quaternion.identity, parent);
-                    board[x, y].GetComponent<RectTransform>().localScale = new Vector2(mover.getScale(), mover.getScale());
-                    board[x, y].GetComponent<RectTransform>().localPosition = new Vector2(mover.conX(x), mover.conY(y) + 800 + Random.Range(0, 50));
-                    board[x, y].GetComponent<Berry>().locX = x;
-                    board[x, y].GetComponent<Berry>().locY = y;
-                }
-            }
-        }
-    }
-
-
-    void gravity()
+    void FillBoard(int[] ids)
     {
         for (int x = 0; x < width; x++)
         {
@@ -74,13 +53,30 @@ public class GameGrid : MonoBehaviour
             {
                 if (board[x, y] == null)
                 {
-                    for(int i = y - 1; i >= 0; i--)
+                    board[x, y] = Instantiate(holder.GetBerry(ids[Random.Range(0, ids.Length)]), new Vector2(mover.ConvertX(x), (mover.ConvertY(y)) + 400), Quaternion.identity, parent);
+                    board[x, y].GetComponent<RectTransform>().localScale = new Vector2(mover.Scale, mover.Scale);
+                    board[x, y].GetComponent<RectTransform>().localPosition = new Vector2(mover.ConvertX(x), mover.ConvertY(y) + 800 + Random.Range(0, 50));
+                    board[x, y].GetComponent<Berry>().locX = x;
+                    board[x, y].GetComponent<Berry>().locY = y;
+                }
+            }
+        }
+    }
+
+    void Gravity()
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = height - 1; y >= 0; y--)
+            {
+                if (board[x, y] == null)
+                {
+                    for (int i = y - 1; i >= 0; i--)
                     {
                         if (board[x, i] != null)
                         {
                             board[x, y] = board[x, i];
-                            board[x, y].GetComponent<Berry>().setPosition(x, y);
-                            //board[x, y].GetComponent<Rigidbody2D>().gravityScale = 1;
+                            board[x, y].GetComponent<Berry>().SetPosition(x, y);
                             board[x, i] = null;
                             break;
                         }
@@ -90,58 +86,38 @@ public class GameGrid : MonoBehaviour
         }
     }
 
-    int remove(int x, int y)
+    int Remove(int x, int y)
     {
-        //Remove berry from list and return what was removed
+        // Remove berry from list and return what was removed
         GameObject removed = board[x, y];
-        int id = removed.GetComponent<Berry>().getId();
+        int id = removed.GetComponent<Berry>().Id;
         Destroy(removed);
         board[x, y] = null;
         return id;
     }
 
-    //Loc is an array that contains the x and y position on the board of which to be removed
-    //Method returns the ammount of each berry removed by index of ID.
-    public int[] removeGroup(int[,] loc)
+    // Loc is an array that contains the x and y position on the board of which to be removed.
+    // Returns the amount of each berry removed by index of ID.
+    public int[] RemoveGroup(int[,] loc)
     {
-        int[] removed = new int[holder.getSize()];
-        for(int i = 0; i < loc.GetLength(0); i++)
+        int[] removed = new int[holder.Size];
+        for (int i = 0; i < loc.GetLength(0); i++)
         {
-            removed[remove(loc[i, 0], loc[i, 1])]++;
+            removed[Remove(loc[i, 0], loc[i, 1])]++;
         }
-        gravity();
-        fillBoard(berries);
-        addScore((int)(removed.Length * (removed.Length * 0.8)));
+        Gravity();
+        FillBoard(berries);
+        AddScore((int)(removed.Length * (removed.Length * 0.8)));
         return removed;
-
     }
 
-    public int getWidth()
+    public void AddScore(int x)
     {
-        return width;
-    }
-
-    public int getHeight()
-    {
-        return height;
-    }
-
-    public void setHeight(int h)
-    {
-        height = h;
-    }
-
-    public void setWidth(int w)
-    {
-        width = w;
-    }
-
-    public void addScore(int x){
         score += x;
         scoretext.text = score.ToString("D6");
     }
 
-    public GameObject get(int x, int y)
+    public GameObject Get(int x, int y)
     {
         return board[x, y];
     }

@@ -26,11 +26,11 @@ public class InputManager : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up);
             if (hit.collider != null)
             {
-                if (drag.isDragging() && hit.collider.gameObject.GetComponent<Berry>().getAdded() == false)
+                if (drag.IsDragging && hit.collider.gameObject.GetComponent<Berry>().Added == false)
                 {
-                    drag.addDragged(gameObject);
-                    hit.collider.gameObject.GetComponent<Berry>().setAdded(true);
-                    drag.drawLines();
+                    drag.AddDragged(gameObject);
+                    hit.collider.gameObject.GetComponent<Berry>().Added = true;
+                    drag.DrawLines();
                 }
             }
         }
@@ -52,7 +52,7 @@ public class InputManager : MonoBehaviour
 
     private void StartTouch(InputAction.CallbackContext context)
     {
-        drag.onDown();
+        drag.OnDown();
         dragStarted = true;
         Debug.Log("Touch started" + touchControls.Touch.TouchPosition.ReadValue<Vector2>());
         if(OnStartTouch != null) OnStartTouch(touchControls.Touch.TouchPosition.ReadValue<Vector2>(), (float)context.startTime);
@@ -60,7 +60,7 @@ public class InputManager : MonoBehaviour
 
     private void EndTouch(InputAction.CallbackContext context)
     {
-        drag.onUp();
+        drag.OnUp();
         dragStarted = false;
         Debug.Log("Touch ended" + touchControls.Touch.TouchPosition.ReadValue<Vector2>());
         if(OnEndTouch != null) OnEndTouch(touchControls.Touch.TouchPosition.ReadValue<Vector2>(), (float)context.time);

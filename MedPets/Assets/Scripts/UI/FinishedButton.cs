@@ -8,9 +8,9 @@ public class FinishedButton : MonoBehaviour
 {
     [SerializeField] Text medInput;
 
-    public void finish()
+    public void Finish()
     {
-        PatientInfo.setMedAmount(medInput.text);
+        PatientInfo.SetMedAmount(medInput.text);
         SceneManager.LoadScene("Title");
     }
 }

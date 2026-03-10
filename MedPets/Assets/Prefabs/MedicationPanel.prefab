@@ -1322,7 +1322,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1752426325022769656}
         m_TargetAssemblyTypeName: MedicationButtons, Assembly-CSharp
-        m_MethodName: setMedication
+        m_MethodName: SetMedication
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1334,7 +1334,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 928031476395757437}
         m_TargetAssemblyTypeName: ButtonChecks, Assembly-CSharp
-        m_MethodName: checkButton
+        m_MethodName: CheckButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1804,7 +1804,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1752426325022769656}
         m_TargetAssemblyTypeName: MedicationButtons, Assembly-CSharp
-        m_MethodName: setMedication
+        m_MethodName: SetMedication
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1816,7 +1816,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 5874648482005277588}
         m_TargetAssemblyTypeName: ButtonChecks, Assembly-CSharp
-        m_MethodName: checkButton
+        m_MethodName: CheckButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1964,7 +1964,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1752426325022769656}
         m_TargetAssemblyTypeName: MedicationButtons, Assembly-CSharp
-        m_MethodName: setMedication
+        m_MethodName: SetMedication
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1976,7 +1976,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 7099303764983628031}
         m_TargetAssemblyTypeName: ButtonChecks, Assembly-CSharp
-        m_MethodName: checkButton
+        m_MethodName: CheckButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2258,7 +2258,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1752426325022769656}
         m_TargetAssemblyTypeName: MedicationButtons, Assembly-CSharp
-        m_MethodName: setMedication
+        m_MethodName: SetMedication
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2270,7 +2270,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 3595703115809420401}
         m_TargetAssemblyTypeName: ButtonChecks, Assembly-CSharp
-        m_MethodName: checkButton
+        m_MethodName: CheckButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2418,7 +2418,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1752426325022769656}
         m_TargetAssemblyTypeName: MedicationButtons, Assembly-CSharp
-        m_MethodName: setMedication
+        m_MethodName: SetMedication
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2430,7 +2430,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 5218702048751124495}
         m_TargetAssemblyTypeName: ButtonChecks, Assembly-CSharp
-        m_MethodName: checkButton
+        m_MethodName: CheckButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2712,7 +2712,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1752426325022769656}
         m_TargetAssemblyTypeName: MedicationButtons, Assembly-CSharp
-        m_MethodName: setMedication
+        m_MethodName: SetMedication
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2724,7 +2724,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1491545339285377032}
         m_TargetAssemblyTypeName: ButtonChecks, Assembly-CSharp
-        m_MethodName: checkButton
+        m_MethodName: CheckButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3175,7 +3175,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1752426325022769656}
         m_TargetAssemblyTypeName: MedicationButtons, Assembly-CSharp
-        m_MethodName: setMedication
+        m_MethodName: SetMedication
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3187,7 +3187,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 2095833440178847164}
         m_TargetAssemblyTypeName: ButtonChecks, Assembly-CSharp
-        m_MethodName: checkButton
+        m_MethodName: CheckButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3544,7 +3544,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1752426325022769656}
         m_TargetAssemblyTypeName: MedicationButtons, Assembly-CSharp
-        m_MethodName: setMedication
+        m_MethodName: SetMedication
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3556,7 +3556,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 8565791821335950212}
         m_TargetAssemblyTypeName: ButtonChecks, Assembly-CSharp
-        m_MethodName: checkButton
+        m_MethodName: CheckButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3704,7 +3704,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1752426325022769656}
         m_TargetAssemblyTypeName: MedicationButtons, Assembly-CSharp
-        m_MethodName: setMedication
+        m_MethodName: SetMedication
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3716,7 +3716,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 2603202170038617907}
         m_TargetAssemblyTypeName: ButtonChecks, Assembly-CSharp
-        m_MethodName: checkButton
+        m_MethodName: CheckButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

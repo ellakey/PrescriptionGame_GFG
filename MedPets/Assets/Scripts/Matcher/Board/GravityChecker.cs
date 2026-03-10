@@ -15,11 +15,8 @@ public class GravityChecker : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (GetComponent<RectTransform>().localPosition.y <= mover.conY(berry.getY())){
-            //col.enabled = true;
-            //rb.gravityScale = 0;
-            //rb.isKinematic = true;
-            GetComponent<RectTransform>().localPosition = new Vector2(GetComponent<RectTransform>().localPosition.x, mover.conY(berry.getY()));
+        if (GetComponent<RectTransform>().localPosition.y <= mover.ConvertY(berry.Y)){
+            GetComponent<RectTransform>().localPosition = new Vector2(GetComponent<RectTransform>().localPosition.x, mover.ConvertY(berry.Y));
         }
         else
         {

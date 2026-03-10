@@ -12,7 +12,7 @@ public class ConsumableUser : MonoBehaviour
         petAnim = GameObject.FindGameObjectWithTag("Pet").GetComponent<Animator>();
     }
 
-    public void useItem()
+    public void UseItem()
     {
         Berry berry = item.GetComponent<Berry>();
         GameState gs = GameState.Instance;
@@ -28,10 +28,10 @@ public class ConsumableUser : MonoBehaviour
         gs.ChangeBlood((int)berry.bloodAmount);
         gs.ChangeEnergy((int)berry.energyAmount);
 
-        gs.items[berry.getId()]--;
-        if (gs.items[berry.getId()] != 0)
+        gs.items[berry.Id]--;
+        if (gs.items[berry.Id] != 0)
         {
-            gameObject.GetComponent<ItemController>().text.text = "x" + gs.items[berry.getId()];
+            gameObject.GetComponent<ItemController>().text.text = "x" + gs.items[berry.Id];
         }
         else
         {

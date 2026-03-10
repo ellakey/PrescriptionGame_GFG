@@ -12,15 +12,12 @@ public class BerryHolder : MonoBehaviour
         itemCount = container.Length;
     }
 
-    //Method to get Berry by ID/position in the container
-    public GameObject getBerry(int id)
+    public int Size => container.Length;
+
+    // Get Berry prefab by ID/position in the container
+    public GameObject GetBerry(int id)
     {
         return container[id];
-    }
-
-    public int getSize()
-    {
-        return container.Length;
     }
 }
 

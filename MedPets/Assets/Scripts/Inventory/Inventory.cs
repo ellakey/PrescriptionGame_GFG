@@ -20,7 +20,7 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         instance = this;
-        if(GameState.Instance != null && holder != null) GameState.Instance.InitItems(holder.getSize());
+        if(GameState.Instance != null && holder != null) GameState.Instance.InitItems(holder.Size);
 
         if (isInventory)
         {
@@ -37,8 +37,8 @@ public class Inventory : MonoBehaviour
             {
                 GameObject current = Instantiate(itemPrefab, gameObject.transform);
                 current.GetComponent<ItemController>().text.text += items[i];
-                current.GetComponent<ItemController>().button.sprite = holder.getBerry(i).GetComponent<Image>().sprite;
-                current.GetComponent<ItemController>().GetComponent<ConsumableUser>().item = holder.getBerry(i);
+                current.GetComponent<ItemController>().button.sprite = holder.GetBerry(i).GetComponent<Image>().sprite;
+                current.GetComponent<ItemController>().GetComponent<ConsumableUser>().item = holder.GetBerry(i);
             }
         }
     }
@@ -46,7 +46,7 @@ public class Inventory : MonoBehaviour
     public static void ShowNewItemPopup(Berry berry)
     {
         if (instance == null) return;
-        instance.ShowNewItemPopupInternal(berry.getDataName(), berry.getDataDescription(), berry.getDataSprite());
+        instance.ShowNewItemPopupInternal(berry.DataName, berry.DataDescription, berry.DataSprite);
     }
 
     private void ShowNewItemPopupInternal(string name, string description, Sprite image)

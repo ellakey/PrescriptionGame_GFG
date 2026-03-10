@@ -23,7 +23,7 @@ public class ButtonSwitch : MonoBehaviour
 
     public void Select()
     {
-        PatientInfo.addMedication(item.guidebookID);
+        PatientInfo.AddMedication(item.guidebookID);
         Debug.Log("Selected");
     }
 }

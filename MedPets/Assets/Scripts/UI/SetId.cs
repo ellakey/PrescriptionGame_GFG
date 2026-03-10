@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SetId : MonoBehaviour
 {
-    public void set(int id)
+    public void Set(int id)
     {
-        PatientInfo.setId(id);
+        PatientInfo.SetId(id);
     }
 }

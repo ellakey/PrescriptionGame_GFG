@@ -19,11 +19,11 @@ public class GuidebookFiller : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < holder.getSize(); i++)
+        for (int i = 0; i < holder.Size; i++)
         {
-            GameObject berryObj = holder.getBerry(i);
+            GameObject berryObj = holder.GetBerry(i);
             Berry berry = berryObj.GetComponent<Berry>();
-            if (berry.getTags()[0].Equals("Medication"))
+            if (berry.Tags[0].Equals("Medication"))
             {
                 GameObject current = Instantiate(prefab, transform);
                 Image icon = current.transform.GetChild(0).GetComponentInChildren<Image>();
@@ -42,7 +42,7 @@ public class GuidebookFiller : MonoBehaviour
 
     private void Update()
     {
-        List<int> meds = PatientInfo.medications;
+        List<int> meds = PatientInfo.Medications;
         for (int i = 0; i < itemImages.Count; i++)
         {
             bool colored = false;
@@ -64,7 +64,7 @@ public class GuidebookFiller : MonoBehaviour
         }
     }
 
-    public void addMedsButton()
+    public void AddMedsButton()
     {
         for (int i = 0; i < toggleChildren.Count; i++)
         {

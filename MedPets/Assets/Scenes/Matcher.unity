@@ -390,7 +390,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 905126527}
         m_TargetAssemblyTypeName: Result, Assembly-CSharp
-        m_MethodName: left
+        m_MethodName: Left
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3389,7 +3389,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 905126527}
         m_TargetAssemblyTypeName: Result, Assembly-CSharp
-        m_MethodName: right
+        m_MethodName: Right
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

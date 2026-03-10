@@ -14,14 +14,14 @@ public class PetNameDisplay : MonoBehaviour
 
     void Start()
     {
-        text.text = PatientInfo.petName;
+        text.text = PatientInfo.PetName;
     }
 
     void Update()
     {
         if (continuous)
         {
-            text.text = PatientInfo.petName;
+            text.text = PatientInfo.PetName;
         }
     }
 }

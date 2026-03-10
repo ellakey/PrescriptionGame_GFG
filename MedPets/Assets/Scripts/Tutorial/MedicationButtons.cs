@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MedicationButtons : MonoBehaviour
 {
-    public void setMedication(int id)
+    public void SetMedication(int id)
     {
-        PatientInfo.addMedication(id);
+        PatientInfo.AddMedication(id);
     }
 }

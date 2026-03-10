@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BerryMover : MonoBehaviour
 {
-
     [SerializeField] GameGrid grid;
     [SerializeField] float xScale;
     [SerializeField] float yScale;
@@ -12,32 +9,29 @@ public class BerryMover : MonoBehaviour
     [SerializeField] float yOffset;
     [SerializeField] float berryScale;
 
+    public float Scale => berryScale;
 
-    public float getScale()
+    // Converts X from matrix to real space
+    public float ConvertX(float x)
     {
-        return berryScale;
+        return (x * xScale + xOffset - (xScale * (grid.Width - 1) / 2));
     }
 
-    //Converts X from matrix to real space
-    public float conX(float x)
+    // Converts X from real space to matrix
+    public float ReverseConvertX(float x)
     {
-        return (x*xScale + xOffset - (xScale*(grid.getWidth() - 1) / 2));
+        return (x / xScale - xOffset + (xScale * (grid.Width - 1) / 2));
     }
 
-    //Converts X from real space to matrix
-    public float revConX(float x)
+    // Converts Y from matrix to real space
+    public float ConvertY(float y)
     {
-        return (x / xScale - xOffset + (xScale*(grid.getWidth() - 1) / 2));
-    }
-    //Same for Y
-    public float conY(float y)
-    {
-        return -(y*yScale + yOffset - (yScale*(grid.getHeight() - 1) / 2));
+        return -(y * yScale + yOffset - (yScale * (grid.Height - 1) / 2));
     }
 
-    public float revConY(float y)
+    // Converts Y from real space to matrix
+    public float ReverseConvertY(float y)
     {
-        return -(y / yScale - yOffset + (yScale*(grid.getHeight() - 1) / 2));
+        return -(y / yScale - yOffset + (yScale * (grid.Height - 1) / 2));
     }
-
 }

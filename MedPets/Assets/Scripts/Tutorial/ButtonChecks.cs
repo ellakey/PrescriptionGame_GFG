@@ -6,7 +6,7 @@ public class ButtonChecks : MonoBehaviour
 {
     public GameObject check;
 
-    public void checkButton()
+    public void CheckButton()
     {
         if (check.activeSelf)
         {

@@ -29,7 +29,7 @@ public class Result : MonoBehaviour
     {
         posX = parent.localPosition.x;
         int[] items = GameState.Instance.items;
-        results = new int[holder.getSize()];
+        results = new int[holder.Size];
 
         for (int i = 0; i < results.Length; i++)
         {
@@ -41,7 +41,7 @@ public class Result : MonoBehaviour
                 float xPos = spawnX + (count * spacing);
 
                 // Berry display item — cache components
-                GameObject berryObj = Instantiate(holder.getBerry(i), new Vector2(xPos, spawnY), Quaternion.identity, parent);
+                GameObject berryObj = Instantiate(holder.GetBerry(i), new Vector2(xPos, spawnY), Quaternion.identity, parent);
                 berryObj.GetComponent<Berry>().enabled = false;
                 berryObj.GetComponent<TouchOver>().enabled = false;
                 berryObj.GetComponent<CircleCollider2D>().enabled = false;
@@ -63,7 +63,7 @@ public class Result : MonoBehaviour
         SaveSystem.SavePet();
     }
 
-    public void right()
+    public void Right()
     {
         if (pan < maxPan - 1)
         {
@@ -72,7 +72,7 @@ public class Result : MonoBehaviour
         }
     }
 
-    public void left()
+    public void Left()
     {
         if (pan > 0)
         {

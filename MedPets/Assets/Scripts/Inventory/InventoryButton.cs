@@ -13,7 +13,7 @@ public class InventoryButton : MonoBehaviour
         inventory = Inventory.instance;
     }
 
-    public void scrollOut()
+    public void ScrollOut()
     {
         if (inventory.newItemPopup.activeSelf)
         {
@@ -25,7 +25,7 @@ public class InventoryButton : MonoBehaviour
         }
     }
 
-    public void scrollIn()
+    public void ScrollIn()
     {
         anim.SetBool("isIn", true);
     }

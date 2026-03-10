@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +25,8 @@ public class DragBehavior : MonoBehaviour
 
     private Camera mainCam;
 
+    public bool IsDragging => dragging;
+
     void Awake()
     {
         itemCounts = new int[BerryHolder.itemCount];
@@ -40,27 +41,27 @@ public class DragBehavior : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            onDown();
+            OnDown();
         }
         if (Input.GetMouseButtonUp(0))
         {
-            onUp();
+            OnUp();
         }
     }
 
-    private int checkList()
+    private int CheckList()
     {
         if (dragged.Count <= 0) return -1;
 
         Berry first = dragged[0];
-        int prevId = first.getId();
+        int prevId = first.Id;
         int count = 0;
-        int toMatch = first.getNum2Match();
-        int[] ids = new int[holder.getSize()];
+        int toMatch = first.NumToMatch;
+        int[] ids = new int[holder.Size];
         int chains = 1;
         List<string> tagsFound = new List<string>();
 
-        foreach (string tag in first.getTags())
+        foreach (string tag in first.Tags)
         {
             tagsFound.Add(tag);
         }
@@ -69,7 +70,7 @@ public class DragBehavior : MonoBehaviour
         {
             Berry berry = dragged[i];
             count++;
-            if (prevId != berry.getId())
+            if (prevId != berry.Id)
             {
                 if (count != toMatch)
                 {
@@ -78,7 +79,7 @@ public class DragBehavior : MonoBehaviour
                 else
                 {
                     ids[prevId] = 1;
-                    int[] incomp = berry.getIncomp();
+                    int[] incomp = berry.Incompatibilities;
                     for (int j = 0; j < incomp.Length; j++)
                     {
                         if (ids[incomp[j]] == 1)
@@ -86,14 +87,14 @@ public class DragBehavior : MonoBehaviour
                             return -1;
                         }
                     }
-                    prevId = berry.getId();
-                    foreach (string tag in berry.getTags())
+                    prevId = berry.Id;
+                    foreach (string tag in berry.Tags)
                     {
                         tagsFound.Add(tag);
                     }
                     count = 0;
                     chains++;
-                    toMatch = berry.getNum2Match();
+                    toMatch = berry.NumToMatch;
                 }
             }
         }
@@ -107,7 +108,7 @@ public class DragBehavior : MonoBehaviour
         // Tag Handling
         for (int i = 0; i < dragged.Count; i++)
         {
-            string[] required = dragged[i].getRequiredTags();
+            string[] required = dragged[i].RequiredTags;
             if (required.Length > 0)
             {
                 for (int j = 0; j < required.Length; j++)
@@ -136,23 +137,23 @@ public class DragBehavior : MonoBehaviour
         return chains;
     }
 
-    public void onUp()
+    public void OnUp()
     {
         dragging = false;
-        if(col != null) col.enabled = false;
-        int chains = checkList();
+        if (col != null) col.enabled = false;
+        int chains = CheckList();
         if (chains != -1)
         {
             int[,] loc = new int[dragged.Count, 2];
             for (int i = 0; i < dragged.Count; i++)
             {
-                loc[i, 0] = dragged[i].getX();
-                loc[i, 1] = dragged[i].getY();
+                loc[i, 0] = dragged[i].X;
+                loc[i, 1] = dragged[i].Y;
             }
-            clearAdded();
+            ClearAdded();
             rightaudio.Play();
-            grid.addScore(dragged.Count * 100);
-            int[] removed = grid.removeGroup(loc);
+            grid.AddScore(dragged.Count * 100);
+            int[] removed = grid.RemoveGroup(loc);
             int count = 0;
             for (int i = 0; i < removed.Length; i++)
             {
@@ -160,7 +161,7 @@ public class DragBehavior : MonoBehaviour
                 itemCounts[i] += removed[i];
                 if (itemCounts[i] % 9 == 0 && itemCounts[i] != currentCount)
                 {
-                    StartCoroutine(spawning(count, i));
+                    StartCoroutine(Spawning(count, i));
                     count++;
                 }
             }
@@ -168,23 +169,23 @@ public class DragBehavior : MonoBehaviour
         }
         else
         {
-            clearAdded();
+            ClearAdded();
             wrongaudio.Play();
         }
-        clearAdded();
+        ClearAdded();
     }
 
-    IEnumerator spawning(int i, int id)
+    IEnumerator Spawning(int i, int id)
     {
         yield return new WaitForSeconds(1.5f * i);
         GameObject collected = Instantiate(collectedPrefab, parent.transform);
         collected.GetComponent<RectTransform>().position = gameObject.transform.position;
-        collected.GetComponent<Image>().sprite = holder.getBerry(id).GetComponent<Image>().sprite;
+        collected.GetComponent<Image>().sprite = holder.GetBerry(id).GetComponent<Image>().sprite;
     }
 
-    public void drawLines()
+    public void DrawLines()
     {
-        if (checkList() >= 0)
+        if (CheckList() >= 0)
         {
             line.startColor = correct;
             line.endColor = correct;
@@ -203,28 +204,23 @@ public class DragBehavior : MonoBehaviour
         line.SetPositions(linePos);
     }
 
-    void clearAdded()
+    void ClearAdded()
     {
         for (int i = 0; i < dragged.Count; i++)
         {
-            dragged[i].setAdded(false);
+            dragged[i].Added = false;
         }
         dragged.Clear();
-        if(line != null) line.positionCount = 0;
+        if (line != null) line.positionCount = 0;
     }
 
-    public void onDown()
+    public void OnDown()
     {
         dragging = true;
     }
 
-    public void addDragged(GameObject obj)
+    public void AddDragged(GameObject obj)
     {
         dragged.Add(obj.GetComponent<Berry>());
-    }
-
-    public bool isDragging()
-    {
-        return dragging;
     }
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,66 +16,66 @@ public class Progression : MonoBehaviour
     public GameObject progressionPanel3;
     public GameObject progressionPanel4;
 
-    public int[] getProgression()
+    public int[] GetProgression()
     {
         if (progressionCounter <= 0)
         {
             progressionPanel1.SetActive(true);
-            return new int[] { PatientInfo.randomMed(), getIncrease() };
+            return new int[] { PatientInfo.RandomMed(), GetIncrease() };
         }
         else if (progressionCounter <= 1)
         {
             progressionPanel2.SetActive(true);
-            return new int[] { PatientInfo.randomMed(), getIncrease(), getDecrease() };
+            return new int[] { PatientInfo.RandomMed(), GetIncrease(), GetDecrease() };
         }
         else if (progressionCounter <= 2)
         {
             progressionPanel3.SetActive(true);
-            return new int[] { PatientInfo.randomMed(), getIncrease(), getDecrease(), getNeutral() };
+            return new int[] { PatientInfo.RandomMed(), GetIncrease(), GetDecrease(), GetNeutral() };
         }
         else
         {
-            return new int[] { PatientInfo.randomMed(), getIncrease(), getDecrease(), getNeutral() };
+            return new int[] { PatientInfo.RandomMed(), GetIncrease(), GetDecrease(), GetNeutral() };
         }
     }
 
-    private int getIncrease()
+    private int GetIncrease()
     {
         List<int> increases = new List<int>();
-        for (int i = 0; i < holder.getSize(); i++)
+        for (int i = 0; i < holder.Size; i++)
         {
-            Berry berry = holder.getBerry(i).GetComponent<Berry>();
-            if (berry.bloodAmount > 0 && berry.getTags()[0].Equals("Food"))
+            Berry berry = holder.GetBerry(i).GetComponent<Berry>();
+            if (berry.bloodAmount > 0 && berry.Tags[0].Equals("Food"))
             {
-                increases.Add(berry.getId());
+                increases.Add(berry.Id);
             }
         }
         return increases[Random.Range(0, increases.Count)];
     }
 
-    private int getDecrease()
+    private int GetDecrease()
     {
         List<int> decreases = new List<int>();
-        for (int i = 0; i < holder.getSize(); i++)
+        for (int i = 0; i < holder.Size; i++)
         {
-            Berry berry = holder.getBerry(i).GetComponent<Berry>();
-            if (berry.bloodAmount < 0 && berry.getTags()[0].Equals("Food"))
+            Berry berry = holder.GetBerry(i).GetComponent<Berry>();
+            if (berry.bloodAmount < 0 && berry.Tags[0].Equals("Food"))
             {
-                decreases.Add(berry.getId());
+                decreases.Add(berry.Id);
             }
         }
         return decreases[Random.Range(0, decreases.Count)];
     }
 
-    private int getNeutral()
+    private int GetNeutral()
     {
         List<int> neutrals = new List<int>();
-        for (int i = 0; i < holder.getSize(); i++)
+        for (int i = 0; i < holder.Size; i++)
         {
-            Berry berry = holder.getBerry(i).GetComponent<Berry>();
-            if (berry.bloodAmount == 0 && berry.getTags()[0].Equals("Food"))
+            Berry berry = holder.GetBerry(i).GetComponent<Berry>();
+            if (berry.bloodAmount == 0 && berry.Tags[0].Equals("Food"))
             {
-                neutrals.Add(berry.getId());
+                neutrals.Add(berry.Id);
             }
         }
         return neutrals[Random.Range(0, neutrals.Count)];

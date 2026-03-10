@@ -5,12 +5,12 @@ using TMPro;
 
 public class ChangePetName : MonoBehaviour
 {
-    public void changePetName(string name)
+    public void ChangeName(string name)
     {
-        PatientInfo.petName = name;
+        PatientInfo.PetName = name;
         if(name.Equals("") || name.Equals(" "))
         {
-            PatientInfo.petName = "Fido";
+            PatientInfo.PetName = "Fido";
         }
         Tutorial.nameChangeable = true;
     }

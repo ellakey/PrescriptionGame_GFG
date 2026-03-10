@@ -114,7 +114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7335047941304581551, guid: 8ec9e688e274e3846ac71b3aa082891e, type: 3}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: changePetName
+      value: ChangeName
       objectReference: {fileID: 0}
     - target: {fileID: 7335047941304581551, guid: 8ec9e688e274e3846ac71b3aa082891e, type: 3}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

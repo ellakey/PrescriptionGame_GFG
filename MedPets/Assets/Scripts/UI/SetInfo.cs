@@ -13,6 +13,6 @@ public class SetInfo : MonoBehaviour
     {
         t1.text = PatientInfo.time1;
         t2.text = PatientInfo.time2;
-        amount.text = PatientInfo.medAmount;
+        amount.text = PatientInfo.MedAmount;
     }
 }

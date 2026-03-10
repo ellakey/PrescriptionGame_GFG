@@ -473,7 +473,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: -8496450571512262858}
         m_TargetAssemblyTypeName: ConsumableUser, Assembly-CSharp
-        m_MethodName: useItem
+        m_MethodName: UseItem
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
