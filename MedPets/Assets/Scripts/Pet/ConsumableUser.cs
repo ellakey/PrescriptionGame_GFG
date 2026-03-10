@@ -5,7 +5,6 @@ using UnityEngine;
 public class ConsumableUser : MonoBehaviour
 {
     public GameObject item;
-    //public AudioSource audio;
     public Animator petAnim;
 
     private void Start()
@@ -15,21 +14,24 @@ public class ConsumableUser : MonoBehaviour
 
     public void useItem()
     {
-        if(!item.GetComponent<Berry>().data.hasBeenUsed)
+        Berry berry = item.GetComponent<Berry>();
+        GameState gs = GameState.Instance;
+
+        if (!berry.data.hasBeenUsed)
         {
-            Inventory.ShowNewItemPopup(item.GetComponent<Berry>());
-            item.GetComponent<Berry>().data.Use();
+            Inventory.ShowNewItemPopup(berry);
+            berry.data.Use();
         }
 
         petAnim.SetTrigger("Eating");
-        //audio.Play();
-        NeedsController.ChangeFood((int)item.GetComponent<Berry>().foodAmount);
-        NeedsController.ChangeBlood((int)item.GetComponent<Berry>().bloodAmount);
-        NeedsController.ChangeEnergy((int)item.GetComponent<Berry>().energyAmount);
-        Inventory.items[item.GetComponent<Berry>().getId()]--;
-        if (Inventory.items[item.GetComponent<Berry>().getId()] != 0)
+        gs.ChangeFood((int)berry.foodAmount);
+        gs.ChangeBlood((int)berry.bloodAmount);
+        gs.ChangeEnergy((int)berry.energyAmount);
+
+        gs.items[berry.getId()]--;
+        if (gs.items[berry.getId()] != 0)
         {
-            gameObject.GetComponent<ItemController>().text.text = "x" + Inventory.items[item.GetComponent<Berry>().getId()];
+            gameObject.GetComponent<ItemController>().text.text = "x" + gs.items[berry.getId()];
         }
         else
         {
@@ -37,5 +39,4 @@ public class ConsumableUser : MonoBehaviour
         }
         SaveSystem.SavePet();
     }
-
 }

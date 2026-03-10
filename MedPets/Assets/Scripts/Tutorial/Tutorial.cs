@@ -11,15 +11,24 @@ public class Tutorial : MonoBehaviour
     public RectTransform rect;
     public TextAsset tutorialScript;
     public MainMenu mainMenu;
-    public static string[,] script;
     public float speed;
-
 
     public int[] progression;
 
-    public static int language;
-    private static int currentText;
+    // Convenience accessors so other scripts can still say Tutorial.language / Tutorial.script
+    // without knowing about GameState directly. Keeps changes minimal elsewhere.
+    public static int language
+    {
+        get => GameState.Instance.language;
+        set => GameState.Instance.language = value;
+    }
+    public static string[,] script
+    {
+        get => GameState.Instance.script;
+        set => GameState.Instance.script = value;
+    }
 
+    private static int currentText;
     private int currentPanel;
     private int lastPanel;
     private float currentLoc;
@@ -36,7 +45,7 @@ public class Tutorial : MonoBehaviour
         ReadCSV();
         lastPanel = 0;
         currentLoc = 0;
-        for(int i = 0; i < progression.Length; i++)
+        for (int i = 0; i < progression.Length; i++)
         {
             panels.Add(Instantiate(prefabs[progression[i]], parent.transform));
             panels[i].GetComponent<TextChanger>().text = script[currentText, language];
@@ -51,25 +60,24 @@ public class Tutorial : MonoBehaviour
 
     private void Update()
     {
-        if(currentLoc != rect.localPosition.x)
+        if (currentLoc != rect.localPosition.x)
         {
             int direction = (rect.localPosition.x < currentLoc) ? 1 : -1;
             rect.localPosition = new Vector2(rect.localPosition.x + (speed * direction), rect.localPosition.y);
-            if(currentLoc > rect.localPosition.x - speed + 1 && currentLoc < rect.localPosition.x + speed + 1)
+            if (currentLoc > rect.localPosition.x - speed + 1 && currentLoc < rect.localPosition.x + speed + 1)
             {
                 rect.localPosition = new Vector2(currentLoc, rect.localPosition.y);
             }
         }
-        if(nameChangeable)
+        if (nameChangeable)
         {
-            Debug.Log("Here " + PatientInfo.petName);
-            for(int i = 0; i < panels.Count; i++)
+            GameState gs = GameState.Instance;
+            for (int i = 0; i < panels.Count; i++)
             {
-                Debug.Log(panels[i].GetComponent<TextChanger>().text);
-                panels[i].GetComponent<TextChanger>().text = panels[i].GetComponent<TextChanger>().text.Replace(currentName, PatientInfo.petName);
+                panels[i].GetComponent<TextChanger>().text = panels[i].GetComponent<TextChanger>().text.Replace(currentName, gs.petName);
                 panels[i].GetComponent<TextChanger>().ReEvaluate();
             }
-            currentName = PatientInfo.petName;
+            currentName = gs.petName;
             nameChangeable = false;
         }
     }
@@ -77,35 +85,20 @@ public class Tutorial : MonoBehaviour
     private void ReadCSV()
     {
         string[] currentData;
-        
-        currentData = tutorialScript.text.Split(new string[] { "\t", "\n"}, StringSplitOptions.RemoveEmptyEntries);
+        currentData = tutorialScript.text.Split(new string[] { "\t", "\n" }, StringSplitOptions.RemoveEmptyEntries);
         script = new string[(currentData.Length / languageCount) - (languageCount * 2) + 2, languageCount];
-        for (int i = 0; i < currentData.Length; i++)
-        {
-            Debug.Log(currentData[i]);
-        }
         for (int i = 0; i <= (currentData.Length / languageCount) - (languageCount * 2) + 1; i++)
         {
-            for(int j = 0; j < languageCount; j++)
+            for (int j = 0; j < languageCount; j++)
             {
-                Debug.Log(i + " " + (j) + " " + currentData[languageCount * (i + languageCount) + j]);
                 script[i, j] = currentData[languageCount * (i + languageCount) + j];
             }
-        }
-        for(int i = 0; i < script.GetLength(0); i++)
-        {
-            string test = "";
-            for(int j = 0; j < script.GetLength(1); j++)
-            {
-                test += (script[i, j] + ", ");
-            }
-            Debug.Log(test);
         }
     }
 
     private void Move()
     {
-        if(currentPanel != 0)
+        if (currentPanel != 0)
         {
             int direction = (currentPanel > lastPanel) ? 1 : -1;
             if (progression[currentPanel] > 2 || progression[lastPanel] > 2)
@@ -134,13 +127,11 @@ public class Tutorial : MonoBehaviour
             currentPanel -= 1;
             Move();
         }
-        Debug.Log(currentLoc + " " + currentPanel + " " + lastPanel);
     }
 
     public void MoveRight()
     {
-        Debug.Log(transform.childCount);
-        if(currentPanel != transform.childCount - 1)
+        if (currentPanel != transform.childCount - 1)
         {
             lastPanel = currentPanel;
             currentPanel += 1;
@@ -150,6 +141,5 @@ public class Tutorial : MonoBehaviour
         {
             mainMenu.ToPet();
         }
-        Debug.Log(currentLoc + " " + currentPanel + " " + lastPanel);
     }
 }

@@ -28,15 +28,14 @@ public class Result : MonoBehaviour
     void Start()
     {
         posX = parent.localPosition.x;
+        int[] items = GameState.Instance.items;
         results = new int[holder.getSize()];
         for (int i = 0; i < results.Length; i++)
         {
-            Debug.Log("outside");
             results[i] = DragBehavior.itemCounts[i] / 9;
-            Inventory.items[i] += results[i];
+            items[i] += results[i];
             if (results[i] > 0)
             {
-                Debug.Log("inside");
                 maxPan++;
                 GameObject current = Instantiate(holder.getBerry(i), new Vector2(spawnX + (count * spacing), spawnY), Quaternion.identity, parent);
                 current.GetComponent<Berry>().enabled = false;
@@ -59,7 +58,7 @@ public class Result : MonoBehaviour
 
     public void right()
     {
-        if(pan < maxPan - 1)
+        if (pan < maxPan - 1)
         {
             posX = posX - spacing;
             pan++;
@@ -78,11 +77,11 @@ public class Result : MonoBehaviour
     private void Update()
     {
         parent.localPosition = new Vector2(currentPosX, parent.localPosition.y);
-        if(currentPosX > posX)
+        if (currentPosX > posX)
         {
             currentPosX -= scrollSpeed;
         }
-        else if(currentPosX < posX)
+        else if (currentPosX < posX)
         {
             currentPosX += scrollSpeed;
         }
@@ -92,5 +91,4 @@ public class Result : MonoBehaviour
             currentPosX = posX;
         }
     }
-
 }

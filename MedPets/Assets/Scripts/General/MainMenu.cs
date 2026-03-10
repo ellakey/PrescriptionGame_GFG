@@ -10,72 +10,53 @@ public class MainMenu : MonoBehaviour
     public GameObject mask;
     public GameObject maskPrefab;
     public RectTransform parent;
-    // public GameObject howtopanel;
-    // public GameObject creditpanel;
 
     void Start()
     {
-        if(audioSource != null)
+        if (audioSource != null)
         {
             audioSource = GetComponent<AudioSource>();
             audioSource.clip = clickaudio;
         }
     }
-    
+
     public void ToTitle()
     {
-        if (audioSource != null)
-        {
-            audioSource.Play();
-        }
+        if (audioSource != null) audioSource.Play();
         SceneManager.LoadScene("Title");
     }
 
     public void ToPet()
     {
-        if(audioSource != null)
-        {
-            audioSource.Play();
-        }
+        if (audioSource != null) audioSource.Play();
         SceneManager.LoadScene("Pet");
     }
 
     public void ToLanguage()
     {
         SaveSystem.LoadPet();
-        if (!NeedsController.playedOnce)
+        GameState gs = GameState.Instance;
+        if (!gs.playedOnce)
         {
-            if (audioSource != null)
-            {
-                audioSource.Play();
-            }
+            if (audioSource != null) audioSource.Play();
             SceneManager.LoadScene("Language");
         }
         else
         {
-            if (audioSource != null)
-            {
-                audioSource.Play();
-            }
+            if (audioSource != null) audioSource.Play();
             SceneManager.LoadScene("Pet");
         }
     }
 
     public void ToTutorial()
     {
-        if (audioSource != null)
-        {
-            audioSource.Play();
-        }
+        if (audioSource != null) audioSource.Play();
         SceneManager.LoadScene("Tutorial");
     }
 
     public void ToPuzzle()
     {
-        if (audioSource != null)
-        {
-            audioSource.Play();
-        }
+        if (audioSource != null) audioSource.Play();
         if (mask != null)
         {
             StartCoroutine(Fade());
@@ -85,46 +66,33 @@ public class MainMenu : MonoBehaviour
             mask = Instantiate(maskPrefab, parent);
             StartCoroutine(Fade());
         }
-        NeedsController.food -= Random.Range(10,20);
-        NeedsController.energy += Random.Range(20,40);
-        NeedsController.blood -= Random.Range(20, 40);
+        GameState gs = GameState.Instance;
+        gs.food -= Random.Range(10, 20);
+        gs.energy += Random.Range(20, 40);
+        gs.blood -= Random.Range(20, 40);
     }
 
     public void ToSettings()
     {
-        if (audioSource != null)
-        {
-            audioSource.Play();
-        }
+        if (audioSource != null) audioSource.Play();
         SceneManager.LoadScene("Settings");
     }
 
     public void ToInventory()
     {
-        if (audioSource != null)
-        {
-            audioSource.Play();
-        }
+        if (audioSource != null) audioSource.Play();
         SceneManager.LoadScene("Inventory");
     }
 
-    //GUIDEBOOK STUFF
     public void ToGuidebook()
     {
-        if (audioSource != null)
-        {
-            audioSource.Play();
-        }
+        if (audioSource != null) audioSource.Play();
         SceneManager.LoadScene("Guidebook");
     }
 
     public void ToInfo()
     {
-        if (audioSource != null)
-        {
-            audioSource.Play();
-        }
-        // SceneManager.LoadScene("Guidebook Info");
+        if (audioSource != null) audioSource.Play();
     }
 
     IEnumerator Fade()
@@ -132,7 +100,6 @@ public class MainMenu : MonoBehaviour
         mask.SetActive(true);
         yield return new WaitForSeconds(2.1f);
         SceneManager.LoadScene("Matcher");
-
     }
 
     public void ResetData()
@@ -143,17 +110,6 @@ public class MainMenu : MonoBehaviour
     public void SetLanguage(int language)
     {
         PlayerPrefs.SetInt("Language", language);
-        Tutorial.language = language;
+        GameState.Instance.language = language;
     }
-
-    // public void Credits()
-    // {
-    //     creditpanel.SetActive(true);
-    //     howtopanel.SetActive(false);
-    // }
-
-    // public void ExitGame ()
-    // {
-    //     Application.Quit();
-    // }
 }

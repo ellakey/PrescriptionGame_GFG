@@ -1,78 +1,56 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Thin static wrapper that delegates to GameState.
+/// Keeps all existing PatientInfo.xxx references compiling without changes.
+/// </summary>
 public static class PatientInfo
 {
-    public static int medId = 0;
-    public static string medAmount;
-    public static int[] matcherIds;
-    public static List<int> medications = new List<int>();
+    public static int medId
+    {
+        get => GameState.Instance.medId;
+        set => GameState.Instance.medId = value;
+    }
+    public static string medAmount
+    {
+        get => GameState.Instance.medAmount;
+        set => GameState.Instance.medAmount = value;
+    }
+    public static int[] matcherIds
+    {
+        get => GameState.Instance.matcherIds;
+        set => GameState.Instance.matcherIds = value;
+    }
+    public static List<int> medications
+    {
+        get => GameState.Instance.medications;
+        set => GameState.Instance.medications = value;
+    }
+    public static string petName
+    {
+        get => GameState.Instance.petName;
+        set => GameState.Instance.petName = value;
+    }
+    public static string dosage
+    {
+        get => GameState.Instance.dosage;
+        set => GameState.Instance.dosage = value;
+    }
+    public static string time
+    {
+        get => GameState.Instance.time;
+        set => GameState.Instance.time = value;
+    }
+
+    // These were never set by anything in the codebase, but keep them for SetInfo.cs
     public static string time1;
     public static string time2;
-    public static string petName;
-    public static string dosage;
-    public static string time;
 
-
-    public static void setId(int id)
-    {
-        medId = id;
-        matcherIds = new int[] { id, 7, 10, 4, 5};
-    }
-
-    public static void setMedAmount(string amount)
-    {
-        medAmount = amount;
-    }
-
-    public static void setMatcherIds(int[] ids)
-    {
-        matcherIds = ids;
-    }
-
-    public static int randomMed()
-    {
-        if (medications.Count != 0) 
-        {
-            return medications[Random.Range(0, PatientInfo.medications.Count)];
-        }
-        else
-        {
-            return 0;
-        }
-        
-    }
-
-    public static void setTime(string t)
-    {
-        time = t;
-    }
-
-    public static void addMedication(int id)
-    {
-        bool changed = false;
-        for(int i = 0; i < medications.Count; i++)
-        {
-            if (medications[i] == id)
-            {
-                medications.Remove(id);
-                Debug.Log("Removed " + id);
-                changed = true;
-            }
-        }
-        if(!changed)
-        {
-            medications.Add(id);
-            Debug.Log("Added " + id);
-        }
-        
-
-        for (int i = 0; i < medications.Count; i++)
-        {
-            Debug.Log(medications[i] + " Spot " + i);
-        }
-
-        SaveSystem.SavePet();
-    }
+    public static void setId(int id) => GameState.Instance.SetMedId(id);
+    public static void setMedAmount(string amount) => GameState.Instance.medAmount = amount;
+    public static void setMatcherIds(int[] ids) => GameState.Instance.matcherIds = ids;
+    public static int randomMed() => GameState.Instance.RandomMed();
+    public static void setTime(string t) => GameState.Instance.time = t;
+    public static void addMedication(int id) => GameState.Instance.AddMedication(id);
 }

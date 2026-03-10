@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class CheckFirstTime : MonoBehaviour
 {
-    // Start is called before the first frame update
     public GameObject tutorialBox;
 
     void Start()
     {
-        if(NeedsController.playedOnce == false)
+        GameState gs = GameState.Instance;
+        if (gs.playedOnce == false)
         {
-            NeedsController.food = 75;
-            NeedsController.blood = 200;
-            NeedsController.energy = 0;
+            gs.food = 75;
+            gs.blood = 200;
+            gs.energy = 0;
             tutorialBox.SetActive(true);
         }
-        NeedsController.playedOnce = true;
+        gs.playedOnce = true;
         SaveSystem.SavePet();
     }
 }

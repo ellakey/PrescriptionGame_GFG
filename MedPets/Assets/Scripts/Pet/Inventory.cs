@@ -7,8 +7,6 @@ using TMPro;
 public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
-    public static int[] items;
-    private static bool started = false;
     public bool isInventory;
     public GameObject itemPrefab;
     public BerryHolder holder;
@@ -19,16 +17,11 @@ public class Inventory : MonoBehaviour
     public TextMeshProUGUI newItemDescription;
     public Image newItemImage;
 
-
     private void Start()
     {
         instance = this;
+        GameState.Instance.InitItems(holder.getSize());
 
-        if(started == false)
-        {
-            items = new int[holder.getSize()];
-            started = true;
-        }
         if (isInventory)
         {
             LoadItems();
@@ -37,7 +30,8 @@ public class Inventory : MonoBehaviour
 
     public void LoadItems()
     {
-        for(int i = 0; i < items.Length; i++)
+        int[] items = GameState.Instance.items;
+        for (int i = 0; i < items.Length; i++)
         {
             if (items[i] != 0)
             {
