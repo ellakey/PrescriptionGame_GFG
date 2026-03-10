@@ -1,0 +1,226 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class DragBehavior : MonoBehaviour
+{
+    public AudioSource rightaudio;
+    public AudioSource wrongaudio;
+
+    public static int[] itemCounts;
+
+    public Color correct;
+    public Color wrong;
+
+    [SerializeField] List<Berry> dragged = new List<Berry>();
+    bool dragging = false;
+    [SerializeField] GameGrid grid;
+    [SerializeField] BerryMover mover;
+    [SerializeField] BerryHolder holder;
+    [SerializeField] CircleCollider2D col;
+    [SerializeField] LineRenderer line;
+    [SerializeField] GameObject collectedPrefab;
+    [SerializeField] RectTransform parent;
+
+    private Camera mainCam;
+
+    public bool IsDragging => dragging;
+
+    void Awake()
+    {
+        itemCounts = new int[BerryHolder.itemCount];
+        mainCam = Camera.main;
+    }
+
+    private void Update()
+    {
+        Vector3 mouseWorldPos = mainCam.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPos.z = 0f;
+        transform.position = mouseWorldPos;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            OnDown();
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            OnUp();
+        }
+    }
+
+    private int CheckList()
+    {
+        if (dragged.Count <= 0) return -1;
+
+        Berry first = dragged[0];
+        int prevId = first.Id;
+        int count = 0;
+        int toMatch = first.NumToMatch;
+        int[] ids = new int[holder.Size];
+        int chains = 1;
+        List<string> tagsFound = new List<string>();
+
+        foreach (string tag in first.Tags)
+        {
+            tagsFound.Add(tag);
+        }
+
+        for (int i = 1; i < dragged.Count; i++)
+        {
+            Berry berry = dragged[i];
+            count++;
+            if (prevId != berry.Id)
+            {
+                if (count != toMatch)
+                {
+                    return -1;
+                }
+                else
+                {
+                    ids[prevId] = 1;
+                    int[] incomp = berry.Incompatibilities;
+                    for (int j = 0; j < incomp.Length; j++)
+                    {
+                        if (ids[incomp[j]] == 1)
+                        {
+                            return -1;
+                        }
+                    }
+                    prevId = berry.Id;
+                    foreach (string tag in berry.Tags)
+                    {
+                        tagsFound.Add(tag);
+                    }
+                    count = 0;
+                    chains++;
+                    toMatch = berry.NumToMatch;
+                }
+            }
+        }
+
+        count++;
+        if (count != toMatch)
+        {
+            return -1;
+        }
+
+        // Tag Handling
+        for (int i = 0; i < dragged.Count; i++)
+        {
+            string[] required = dragged[i].RequiredTags;
+            if (required.Length > 0)
+            {
+                for (int j = 0; j < required.Length; j++)
+                {
+                    bool found = false;
+                    for (int k = 0; k < tagsFound.Count; k++)
+                    {
+                        if (required[j].Equals(tagsFound[k]))
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found)
+                    {
+                        return -1;
+                    }
+                }
+            }
+        }
+
+        if (chains < 1)
+        {
+            return -1;
+        }
+        return chains;
+    }
+
+    public void OnUp()
+    {
+        dragging = false;
+        if (col != null) col.enabled = false;
+        int chains = CheckList();
+        if (chains != -1)
+        {
+            int[,] loc = new int[dragged.Count, 2];
+            for (int i = 0; i < dragged.Count; i++)
+            {
+                loc[i, 0] = dragged[i].X;
+                loc[i, 1] = dragged[i].Y;
+            }
+            ClearAdded();
+            rightaudio.Play();
+            grid.AddScore(dragged.Count * 100);
+            int[] removed = grid.RemoveGroup(loc);
+            int count = 0;
+            for (int i = 0; i < removed.Length; i++)
+            {
+                int currentCount = itemCounts[i];
+                itemCounts[i] += removed[i];
+                if (itemCounts[i] % 9 == 0 && itemCounts[i] != currentCount)
+                {
+                    StartCoroutine(Spawning(count, i));
+                    count++;
+                }
+            }
+            dragged.Clear();
+        }
+        else
+        {
+            ClearAdded();
+            if(wrongaudio != null) wrongaudio.Play();
+        }
+        ClearAdded();
+    }
+
+    IEnumerator Spawning(int i, int id)
+    {
+        yield return new WaitForSeconds(1.5f * i);
+        GameObject collected = Instantiate(collectedPrefab, parent.transform);
+        collected.GetComponent<RectTransform>().position = gameObject.transform.position;
+        collected.GetComponent<Image>().sprite = holder.GetBerry(id).GetComponent<Image>().sprite;
+    }
+
+    public void DrawLines()
+    {
+        if (CheckList() >= 0)
+        {
+            line.startColor = correct;
+            line.endColor = correct;
+        }
+        else
+        {
+            line.startColor = wrong;
+            line.endColor = wrong;
+        }
+        Vector3[] linePos = new Vector3[dragged.Count];
+        line.positionCount = dragged.Count;
+        for (int i = 0; i < dragged.Count; i++)
+        {
+            linePos[i] = dragged[i].transform.position;
+        }
+        line.SetPositions(linePos);
+    }
+
+    void ClearAdded()
+    {
+        for (int i = 0; i < dragged.Count; i++)
+        {
+            dragged[i].Added = false;
+        }
+        dragged.Clear();
+        if (line != null) line.positionCount = 0;
+    }
+
+    public void OnDown()
+    {
+        dragging = true;
+    }
+
+    public void AddDragged(GameObject obj)
+    {
+        dragged.Add(obj.GetComponent<Berry>());
+    }
+}
