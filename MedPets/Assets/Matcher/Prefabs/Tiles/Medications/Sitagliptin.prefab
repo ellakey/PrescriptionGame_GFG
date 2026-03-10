@@ -92,9 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bdb50dcd8e22974ea5752835aa3e334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: f7304ed2c7f344bb89f8073062dd6d2a, type: 2}
   name: Sitagliptin
-  description: Sitagliptin
-  description2: Sitagliptin
   descriptionTextLines: 390000003a000000
   id: 13
   tags:

@@ -124,7 +124,7 @@ public class MainMenu : MonoBehaviour
         {
             audioSource.Play();
         }
-        SceneManager.LoadScene("Guidebook Info");
+        // SceneManager.LoadScene("Guidebook Info");
     }
 
     IEnumerator Fade()

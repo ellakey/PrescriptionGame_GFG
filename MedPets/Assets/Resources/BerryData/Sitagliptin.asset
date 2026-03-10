@@ -15,6 +15,7 @@ MonoBehaviour:
   ID: 
   name:
   - Sitagliptin
+  - Sitagliptin but in spanish
   description:
   - sdgvae
   sprite: {fileID: 21300000, guid: d89179410a094834a97ec592cb7cfbd0, type: 3}
