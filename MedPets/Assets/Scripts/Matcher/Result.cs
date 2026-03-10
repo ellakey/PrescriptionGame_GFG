@@ -30,6 +30,7 @@ public class Result : MonoBehaviour
         posX = parent.localPosition.x;
         int[] items = GameState.Instance.items;
         results = new int[holder.getSize()];
+
         for (int i = 0; i < results.Length; i++)
         {
             results[i] = DragBehavior.itemCounts[i] / 9;
@@ -37,22 +38,28 @@ public class Result : MonoBehaviour
             if (results[i] > 0)
             {
                 maxPan++;
-                GameObject current = Instantiate(holder.getBerry(i), new Vector2(spawnX + (count * spacing), spawnY), Quaternion.identity, parent);
-                current.GetComponent<Berry>().enabled = false;
-                current.GetComponent<TouchOver>().enabled = false;
-                current.GetComponent<CircleCollider2D>().enabled = false;
-                current.GetComponent<GravityChecker>().enabled = false;
-                current.GetComponent<RectTransform>().localScale = new Vector2(scaleX, scaleY);
-                current.GetComponent<RectTransform>().localPosition = new Vector2(spawnX + (count * spacing), spawnY);
-                current = Instantiate(textPrefab, new Vector2(spawnX + (count * spacing), spawnY), Quaternion.identity, parent);
-                current.GetComponent<RectTransform>().localPosition = new Vector2(spawnX + (count * spacing) + 175, spawnY - 100);
-                current.GetComponent<TextMeshProUGUI>().text += results[i];
+                float xPos = spawnX + (count * spacing);
+
+                // Berry display item — cache components
+                GameObject berryObj = Instantiate(holder.getBerry(i), new Vector2(xPos, spawnY), Quaternion.identity, parent);
+                berryObj.GetComponent<Berry>().enabled = false;
+                berryObj.GetComponent<TouchOver>().enabled = false;
+                berryObj.GetComponent<CircleCollider2D>().enabled = false;
+                berryObj.GetComponent<GravityChecker>().enabled = false;
+                RectTransform berryRect = berryObj.GetComponent<RectTransform>();
+                berryRect.localScale = new Vector2(scaleX, scaleY);
+                berryRect.localPosition = new Vector2(xPos, spawnY);
+
+                // Count label
+                GameObject textObj = Instantiate(textPrefab, new Vector2(xPos, spawnY), Quaternion.identity, parent);
+                textObj.GetComponent<RectTransform>().localPosition = new Vector2(xPos + 175, spawnY - 100);
+                textObj.GetComponent<TextMeshProUGUI>().text += results[i];
                 count++;
             }
         }
+
         scoretext.text = GameGrid.score.ToString("D6");
         Progression.progressionCounter++;
-
         SaveSystem.SavePet();
     }
 
@@ -60,7 +67,7 @@ public class Result : MonoBehaviour
     {
         if (pan < maxPan - 1)
         {
-            posX = posX - spacing;
+            posX -= spacing;
             pan++;
         }
     }
@@ -69,7 +76,7 @@ public class Result : MonoBehaviour
     {
         if (pan > 0)
         {
-            posX = posX + spacing;
+            posX += spacing;
             pan--;
         }
     }
@@ -77,18 +84,14 @@ public class Result : MonoBehaviour
     private void Update()
     {
         parent.localPosition = new Vector2(currentPosX, parent.localPosition.y);
-        if (currentPosX > posX)
-        {
-            currentPosX -= scrollSpeed;
-        }
-        else if (currentPosX < posX)
-        {
-            currentPosX += scrollSpeed;
-        }
+        float diff = currentPosX - posX;
 
-        if ((currentPosX - posX < 10 && currentPosX - posX >= 0) || (currentPosX - posX > -10 && currentPosX - posX <= 0))
-        {
+        if (currentPosX > posX)
+            currentPosX -= scrollSpeed;
+        else if (currentPosX < posX)
+            currentPosX += scrollSpeed;
+
+        if (diff < 10 && diff > -10)
             currentPosX = posX;
-        }
     }
 }

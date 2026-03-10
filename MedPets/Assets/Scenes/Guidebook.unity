@@ -1527,7 +1527,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holder: {fileID: 489158718}
   prefab: {fileID: 1470467368344381536, guid: eb14eab0ca221fe4aaa666263b10c470, type: 3}
-  prefabHolder: []
   changing: 0
   plusButtonImage: {fileID: 1344257454}
   plusSprite: {fileID: 21300000, guid: ca6a2c7db3c0ffa48ae4d066d70fbeae, type: 3}

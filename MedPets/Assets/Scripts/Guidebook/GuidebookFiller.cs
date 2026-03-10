@@ -7,73 +7,71 @@ public class GuidebookFiller : MonoBehaviour
 {
     public BerryHolder holder;
     public GameObject prefab;
-    public List<GameObject> prefabHolder;
     public bool changing;
     public Image plusButtonImage;
     public Sprite plusSprite;
     public Sprite checkSprite;
 
-    // Start is called before the first frame update
+    // Cached references so Update doesn't call GetComponent every frame
+    private List<Image> itemImages = new List<Image>();
+    private List<int> itemIds = new List<int>();
+    private List<GameObject> toggleChildren = new List<GameObject>();
+
     void Start()
     {
-        prefabHolder = new List<GameObject>();
         for (int i = 0; i < holder.getSize(); i++)
         {
-            if (holder.getBerry(i).GetComponent<Berry>().getTags()[0].Equals("Medication"))
+            GameObject berryObj = holder.getBerry(i);
+            Berry berry = berryObj.GetComponent<Berry>();
+            if (berry.getTags()[0].Equals("Medication"))
             {
                 GameObject current = Instantiate(prefab, transform);
-                current.transform.GetChild(0).GetComponentInChildren<Image>().sprite = holder.getBerry(i).GetComponent<Image>().sprite;
-                current.GetComponentInChildren<GuidebookItem>().guidebookID = i;
-                prefabHolder.Add(current);
+                Image icon = current.transform.GetChild(0).GetComponentInChildren<Image>();
+                icon.sprite = berryObj.GetComponent<Image>().sprite;
+
+                GuidebookItem item = current.GetComponentInChildren<GuidebookItem>();
+                item.guidebookID = i;
+
+                // Cache what we need for Update and addMedsButton
+                itemImages.Add(icon);
+                itemIds.Add(i);
+                toggleChildren.Add(current.transform.GetChild(1).gameObject);
             }
         }
     }
 
     private void Update()
     {
-        for (int i = 0; i < prefabHolder.Count; i++)
+        List<int> meds = PatientInfo.medications;
+        for (int i = 0; i < itemImages.Count; i++)
         {
             bool colored = false;
-            Image image = prefabHolder[i].transform.GetChild(0).GetComponent<Image>();
-            for (int j = 0; j < PatientInfo.medications.Count; j++)
+            for (int j = 0; j < meds.Count; j++)
             {
-                if (!colored && prefabHolder[i].GetComponent<GuidebookItem>().guidebookID == PatientInfo.medications[j])
+                if (itemIds[i] == meds[j])
                 {
-                    image.color = new Color(image.color.r, image.color.g, image.color.b, 1f);
+                    Image img = itemImages[i];
+                    img.color = new Color(img.color.r, img.color.g, img.color.b, 1f);
                     colored = true;
+                    break;
                 }
             }
             if (!colored)
             {
-                image.color = new Color(image.color.r, image.color.g, image.color.b, 0.3f);
+                Image img = itemImages[i];
+                img.color = new Color(img.color.r, img.color.g, img.color.b, 0.3f);
             }
         }
-        
     }
 
     public void addMedsButton()
     {
-        for(int i = 0; i < prefabHolder.Count; i++)
+        for (int i = 0; i < toggleChildren.Count; i++)
         {
-            if (changing)
-            {
-                prefabHolder[i].transform.GetChild(1).gameObject.SetActive(false);
-            }
-            else
-            {
-                prefabHolder[i].transform.GetChild(1).gameObject.SetActive(true);
-            }
+            toggleChildren[i].SetActive(!changing);
         }
 
-        if (changing)
-        {
-            changing = false;
-            plusButtonImage.sprite = plusSprite;
-        }
-        else
-        {
-            changing = true;
-            plusButtonImage.sprite = checkSprite;
-        }
+        changing = !changing;
+        plusButtonImage.sprite = changing ? checkSprite : plusSprite;
     }
 }
