@@ -6,14 +6,13 @@ using UnityEngine;
 public class BerryData : ScriptableObject
 {
     public string ID;
-    public string name;
-    public string description;
-    public string spanishName;
-    public string spanishDescription;
+    public string[] name;
+    public string[] description;
+    public Sprite sprite;
     public bool hasBeenUsed = false;
 
     #if UNITY_EDITOR
-    void Start()
+    void OnEnable()
     {
         hasBeenUsed = false;
     }

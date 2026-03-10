@@ -104,6 +104,17 @@ public static class SaveSystem
     public static void Reset()
     {
         PlayerPrefs.DeleteAll();
+        ResetAllItems();
+    }
+
+    public static void ResetAllItems()
+    {
+        // get scriptables from resources folder and reset them
+        BerryData[] berries = Resources.LoadAll<BerryData>("BerryData");
+        foreach (BerryData berry in berries)
+        {
+            berry.hasBeenUsed = false;
+        }
     }
 
 }

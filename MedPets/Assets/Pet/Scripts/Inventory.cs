@@ -6,6 +6,7 @@ using TMPro;
 
 public class Inventory : MonoBehaviour
 {
+    public static Inventory instance;
     public static int[] items;
     private static bool started = false;
     public bool isInventory;
@@ -21,6 +22,8 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
+        instance = this;
+
         if(started == false)
         {
             items = new int[holder.getSize()];
@@ -46,11 +49,17 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void ShowNewItemPopup(Berry berry)
+    public static void ShowNewItemPopup(Berry berry)
     {
-        newItemText.text = berry.getName();
-        newItemDescription.text = berry.getDescription();
-        newItemImage.sprite = berry.GetComponent<Image>().sprite;
+        if (instance == null) return;
+        instance.ShowNewItemPopupInternal(berry.getDataName(), berry.getDataDescription(), berry.getDataSprite());
+    }
+
+    private void ShowNewItemPopupInternal(string name, string description, Sprite image)
+    {
+        newItemText.text = name;
+        newItemDescription.text = description;
+        newItemImage.sprite = image;
         newItemPopup.SetActive(true);
     }
 

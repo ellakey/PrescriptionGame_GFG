@@ -26,12 +26,6 @@ public class Berry : MonoBehaviour
     public float energyAmount;
     [SerializeField] private bool added = false;
 
-    void Start()
-    {
-        data.name = name;
-    }
-
-
     //No Gravity Constructor
     public Berry(string n, string desc, int i, int numM, int[] incomp)
     {
@@ -121,11 +115,17 @@ public class Berry : MonoBehaviour
 
     public string getDataName()
     {
-        return data.name;
+        Debug.Log("Language: " + PlayerPrefs.GetInt("Language"));
+        return data.name[PlayerPrefs.GetInt("Language")];
     }
 
     public string getDataDescription()
     {
-        return data.description;
+        return data.description[PlayerPrefs.GetInt("Language")];
+    }
+
+    public Sprite getDataSprite()
+    {
+        return data.sprite;
     }
 }

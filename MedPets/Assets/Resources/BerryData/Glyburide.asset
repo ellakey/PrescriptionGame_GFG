@@ -10,7 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a14c7e0b2f26481988f27e5f210668d, type: 3}
-  m_Name: Empaglifozin
+  m_Name: Glyburide
   m_EditorClassIdentifier: 
-  name: 
+  ID: 
+  name:
+  - Glyburide
+  description:
+  - rgerabv
+  sprite: {fileID: 21300000, guid: 540d5ed9a1966554295e91e4dcfc123e, type: 3}
   hasBeenUsed: 0

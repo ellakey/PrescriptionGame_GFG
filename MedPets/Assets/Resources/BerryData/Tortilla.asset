@@ -10,7 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a14c7e0b2f26481988f27e5f210668d, type: 3}
-  m_Name: Chicken
+  m_Name: Tortilla
   m_EditorClassIdentifier: 
-  name: Chicken
+  ID: 
+  name:
+  - Tortilla
+  description:
+  - asdg
+  sprite: {fileID: 21300000, guid: d148ea6fd19cee748b068acc6c7660f6, type: 3}
   hasBeenUsed: 0

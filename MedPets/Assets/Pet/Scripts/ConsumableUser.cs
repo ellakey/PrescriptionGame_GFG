@@ -17,8 +17,7 @@ public class ConsumableUser : MonoBehaviour
     {
         if(!item.GetComponent<Berry>().data.hasBeenUsed)
         {
-            // has never been used before
-            // popup here
+            Inventory.ShowNewItemPopup(item.GetComponent<Berry>());
             item.GetComponent<Berry>().data.Use();
         }
 

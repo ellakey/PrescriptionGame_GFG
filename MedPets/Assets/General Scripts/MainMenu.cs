@@ -142,6 +142,7 @@ public class MainMenu : MonoBehaviour
 
     public void SetLanguage(int language)
     {
+        PlayerPrefs.SetInt("Language", language);
         Tutorial.language = language;
     }
 

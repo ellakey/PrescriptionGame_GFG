@@ -10,7 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a14c7e0b2f26481988f27e5f210668d, type: 3}
-  m_Name: Sitagliptin
+  m_Name: Avocado
   m_EditorClassIdentifier: 
-  name: 
+  ID: 
+  name:
+  - Avocado
+  description:
+  - Avocado decsription
+  sprite: {fileID: 21300000, guid: 0d11089be199c684c8bb55618b7fb925, type: 3}
   hasBeenUsed: 0
