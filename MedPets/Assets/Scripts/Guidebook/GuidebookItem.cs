@@ -17,7 +17,7 @@ public class GuidebookItem : MonoBehaviour
         }
     }
 
-    public void setGuidebookID()
+    public void SetGuidebookID()
     {
         if(guidebookInfo == null)
         {

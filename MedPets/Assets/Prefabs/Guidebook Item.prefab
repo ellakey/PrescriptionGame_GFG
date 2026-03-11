@@ -411,7 +411,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 7114551024902169473}
         m_TargetAssemblyTypeName: GuidebookItem, Assembly-CSharp
-        m_MethodName: setGuidebookID
+        m_MethodName: SetGuidebookID
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

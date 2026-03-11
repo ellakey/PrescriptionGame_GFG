@@ -1614,8 +1614,6 @@ GameObject:
   - component: {fileID: 527085808}
   - component: {fileID: 527085807}
   - component: {fileID: 527085806}
-  - component: {fileID: 527085810}
-  - component: {fileID: 527085809}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1673,30 +1671,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &527085809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 527085805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ac21de130b394e5d82ad4ba3ba00c05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &527085810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 527085805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecf33c5644a644b6e8d19fd693ee6ebf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &548428728
 GameObject:
   m_ObjectHideFlags: 0
@@ -2674,6 +2648,7 @@ MonoBehaviour:
   scoretext: {fileID: 853607323}
   textPrefab: {fileID: 8087939080395729230, guid: ee759516870cdf9419c7e36d8588fd99, type: 3}
   holder: {fileID: 6656654041719299125}
+  gameGrid: {fileID: 1616609105}
   parent: {fileID: 624970555}
   spawnX: 0
   spawnY: 0
@@ -3542,7 +3517,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1616609103}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d39e780ad0a3d4e5c978b21741626a17, type: 3}
   m_Name: 

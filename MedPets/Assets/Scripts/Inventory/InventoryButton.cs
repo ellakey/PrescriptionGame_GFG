@@ -10,7 +10,7 @@ public class InventoryButton : MonoBehaviour
 
     private void Start()
     {
-        inventory = Inventory.instance;
+        inventory = Inventory.Instance;
     }
 
     public void ScrollOut()

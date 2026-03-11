@@ -8,6 +8,7 @@ public class Result : MonoBehaviour
     public TextMeshProUGUI scoretext;
     public GameObject textPrefab;
     public BerryHolder holder;
+    public GameGrid gameGrid;
     public Transform parent;
     private int count;
 
@@ -29,11 +30,12 @@ public class Result : MonoBehaviour
     {
         posX = parent.localPosition.x;
         int[] items = GameState.Instance.items;
+        MatchSession session = gameGrid.Session;
         results = new int[holder.Size];
 
         for (int i = 0; i < results.Length; i++)
         {
-            results[i] = DragBehavior.itemCounts[i] / 9;
+            results[i] = session.ItemCounts[i] / 9;
             items[i] += results[i];
             if (results[i] > 0)
             {
@@ -58,7 +60,7 @@ public class Result : MonoBehaviour
             }
         }
 
-        scoretext.text = GameGrid.score.ToString("D6");
+        scoretext.text = session.Score.ToString("D6");
         Progression.progressionCounter++;
         SaveSystem.SavePet();
     }

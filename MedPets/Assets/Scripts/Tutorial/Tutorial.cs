@@ -28,18 +28,21 @@ public class Tutorial : MonoBehaviour
         set => GameState.Instance.script = value;
     }
 
-    private static int currentText;
+    public static Tutorial Instance { get; private set; }
+
+    private int currentText;
     private int currentPanel;
     private int lastPanel;
     private float currentLoc;
     public int spacing = 800;
 
     private List<GameObject> panels;
-    public static bool nameChangeable = false;
+    private bool nameChangeable = false;
     private string currentName;
 
     private void Start()
     {
+        Instance = this;
         currentName = "Fido";
         panels = new List<GameObject>();
         ReadCSV();
@@ -141,5 +144,10 @@ public class Tutorial : MonoBehaviour
         {
             mainMenu.ToPet();
         }
+    }
+
+    public void NotifyNameChanged()
+    {
+        nameChangeable = true;
     }
 }

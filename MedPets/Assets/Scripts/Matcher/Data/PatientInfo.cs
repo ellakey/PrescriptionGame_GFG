@@ -43,7 +43,6 @@ public static class PatientInfo
         set => GameState.Instance.time = value;
     }
 
-    // These were never set by anything in the codebase, but keep them for SetInfo.cs
     public static string time1;
     public static string time2;
 

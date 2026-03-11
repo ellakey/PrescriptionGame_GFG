@@ -8,8 +8,6 @@ public class DragBehavior : MonoBehaviour
     public AudioSource rightaudio;
     public AudioSource wrongaudio;
 
-    public static int[] itemCounts;
-
     public Color correct;
     public Color wrong;
 
@@ -29,7 +27,6 @@ public class DragBehavior : MonoBehaviour
 
     void Awake()
     {
-        itemCounts = new int[BerryHolder.itemCount];
         mainCam = Camera.main;
     }
 
@@ -154,12 +151,13 @@ public class DragBehavior : MonoBehaviour
             rightaudio.Play();
             grid.AddScore(dragged.Count * 100);
             int[] removed = grid.RemoveGroup(loc);
+            int[] counts = grid.Session.ItemCounts;
             int count = 0;
             for (int i = 0; i < removed.Length; i++)
             {
-                int currentCount = itemCounts[i];
-                itemCounts[i] += removed[i];
-                if (itemCounts[i] % 9 == 0 && itemCounts[i] != currentCount)
+                int currentCount = counts[i];
+                counts[i] += removed[i];
+                if (counts[i] % 9 == 0 && counts[i] != currentCount)
                 {
                     StartCoroutine(Spawning(count, i));
                     count++;
@@ -170,7 +168,7 @@ public class DragBehavior : MonoBehaviour
         else
         {
             ClearAdded();
-            if(wrongaudio != null) wrongaudio.Play();
+            wrongaudio.Play();
         }
         ClearAdded();
     }

@@ -111,6 +111,31 @@ public static class SaveSystem
     {
         PlayerPrefs.DeleteAll();
         ResetAllItems();
+
+        // Also reset in-memory state so the current session reflects the wipe
+        GameState gs = GameState.Instance;
+        if (gs != null)
+        {
+            gs.food = 0;
+            gs.blood = 0;
+            gs.energy = 0;
+            gs.playedOnce = false;
+            gs.petName = "Pet";
+            gs.medId = 0;
+            gs.medAmount = "";
+            gs.matcherIds = null;
+            gs.medications.Clear();
+            gs.dosage = "";
+            gs.time = "";
+            gs.language = 0;
+            gs.script = null;
+            gs.progressionCounter = 0;
+            if (gs.items != null)
+            {
+                for (int i = 0; i < gs.items.Length; i++)
+                    gs.items[i] = 0;
+            }
+        }
     }
 
     public static void ResetAllItems()

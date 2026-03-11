@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TimingManager : MonoBehaviour
 {
-    public static float gameHourTimer;
+    private float gameHourTimer;
 
     public float hourLength;
 

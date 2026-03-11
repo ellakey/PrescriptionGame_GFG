@@ -6,7 +6,7 @@ using TMPro;
 
 public class Inventory : MonoBehaviour
 {
-    public static Inventory instance;
+    public static Inventory Instance { get; private set; }
     public bool isInventory;
     public GameObject itemPrefab;
     public BerryHolder holder;
@@ -19,7 +19,7 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        instance = this;
+        Instance = this;
         if(GameState.Instance != null && holder != null) GameState.Instance.InitItems(holder.Size);
 
         if (isInventory)
@@ -36,7 +36,7 @@ public class Inventory : MonoBehaviour
             if (items[i] != 0)
             {
                 GameObject current = Instantiate(itemPrefab, gameObject.transform);
-                current.GetComponent<ItemController>().text.text += items[i];
+                current.GetComponent<ItemController>().text.text = "x" + items[i];
                 current.GetComponent<ItemController>().button.sprite = holder.GetBerry(i).GetComponent<Image>().sprite;
                 current.GetComponent<ItemController>().GetComponent<ConsumableUser>().item = holder.GetBerry(i);
             }
@@ -45,8 +45,8 @@ public class Inventory : MonoBehaviour
 
     public static void ShowNewItemPopup(Berry berry)
     {
-        if (instance == null) return;
-        instance.ShowNewItemPopupInternal(berry.DataName, berry.DataDescription, berry.DataSprite);
+        if (Instance == null) return;
+        Instance.ShowNewItemPopupInternal(berry.DataName, berry.DataDescription, berry.DataSprite);
     }
 
     private void ShowNewItemPopupInternal(string name, string description, Sprite image)

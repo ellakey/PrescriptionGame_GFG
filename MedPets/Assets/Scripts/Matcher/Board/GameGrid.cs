@@ -12,7 +12,7 @@ public class GameGrid : MonoBehaviour
     [SerializeField] int height;
     int[] berries;
 
-    public static int score;
+    public MatchSession Session { get; private set; }
     public TextMeshProUGUI scoretext;
 
     public int Width
@@ -29,15 +29,7 @@ public class GameGrid : MonoBehaviour
 
     private void Start()
     {
-        // Reset match session state (previously in Reset.cs)
-        score = 0;
-        if (DragBehavior.itemCounts != null)
-        {
-            for (int i = 0; i < DragBehavior.itemCounts.Length; i++)
-            {
-                DragBehavior.itemCounts[i] = 0;
-            }
-        }
+        Session = new MatchSession(holder.Size);
 
         PatientInfo.SetId(PatientInfo.MedId);
         berries = progression.GetProgression();
@@ -111,10 +103,10 @@ public class GameGrid : MonoBehaviour
         return removed;
     }
 
-    public void AddScore(int x)
+    public void AddScore(int amount)
     {
-        score += x;
-        scoretext.text = score.ToString("D6");
+        Session.AddScore(amount);
+        scoretext.text = Session.Score.ToString("D6");
     }
 
     public GameObject Get(int x, int y)

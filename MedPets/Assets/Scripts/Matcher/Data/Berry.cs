@@ -7,7 +7,6 @@ public class Berry : MonoBehaviour
     [SerializeField] new string name;
 
     [SerializeField] int[] descriptionTextLines;
-    // Make sure this is the Index in the Berry Holder script in BoardManager
     [SerializeField] int id;
     [SerializeField] string[] tags;
     // Ids of incompatible berries
