@@ -4,9 +4,8 @@ using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Central singleton that owns all persistent player/game data.
-/// Lives across scenes via DontDestroyOnLoad or is re-created on each scene load.
-/// Every other script reads/writes through GameState.Instance instead of scattered statics.
-/// Handles auto-load on startup and auto-save on scene transitions and app pause.
+/// Auto-creates itself before any scene loads via RuntimeInitializeOnLoadMethod,
+/// so you can press Play from any scene and have saved data available.
 /// </summary>
 public class GameState : MonoBehaviour
 {
@@ -36,6 +35,21 @@ public class GameState : MonoBehaviour
 
     [Header("Progression")]
     public int progressionCounter;
+
+    /// <summary>
+    /// Runs before any scene loads, even before Awake().
+    /// If no GameState exists yet (e.g. hitting Play from a non-Title scene),
+    /// creates one so all other scripts can safely access GameState.Instance.
+    /// </summary>
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void AutoBootstrap()
+    {
+        if (Instance != null) return;
+
+        GameObject go = new GameObject("GameState (Auto)");
+        go.AddComponent<GameState>();
+        // Awake() handles the rest: sets Instance, DontDestroyOnLoad, loads save data
+    }
 
     private void Awake()
     {
