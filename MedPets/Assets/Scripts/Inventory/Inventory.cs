@@ -36,7 +36,7 @@ public class Inventory : MonoBehaviour
             if (items[i] != 0)
             {
                 GameObject current = Instantiate(itemPrefab, gameObject.transform);
-                current.GetComponent<ItemController>().text.text += items[i];
+                current.GetComponent<ItemController>().text.text = "x" + items[i];
                 current.GetComponent<ItemController>().button.sprite = holder.GetBerry(i).GetComponent<Image>().sprite;
                 current.GetComponent<ItemController>().GetComponent<ConsumableUser>().item = holder.GetBerry(i);
             }
