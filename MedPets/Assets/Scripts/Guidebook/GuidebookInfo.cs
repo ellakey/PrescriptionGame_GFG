@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GuidebookInfo : MonoBehaviour
 {
-    public static int guidebookID;
+    private int guidebookID;
     public GameObject infoPanel;
     public TextMeshProUGUI itemName;
     public TextMeshProUGUI desc;
@@ -15,7 +15,7 @@ public class GuidebookInfo : MonoBehaviour
     public void SetGuidebookItem(int id)
     {
         guidebookID = id;
-        Berry item = Inventory.instance.holder.GetBerry(guidebookID).GetComponent<Berry>();
+        Berry item = Inventory.Instance.holder.GetBerry(guidebookID).GetComponent<Berry>();
         itemName.text = item.DataName;
         desc.text = item.DataDescription;
         image.sprite = item.DataSprite;

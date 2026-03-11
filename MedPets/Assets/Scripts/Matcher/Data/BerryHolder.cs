@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class BerryHolder : MonoBehaviour
 {
-    //Static Container that can be added to in the inspector when on an object
+    // Static Container that can be added to in the inspector when on an object
     [SerializeField] GameObject[] container;
-    public static int itemCount;
-    private void Awake()
-    {
-        itemCount = container.Length;
-    }
 
     public int Size => container.Length;
 

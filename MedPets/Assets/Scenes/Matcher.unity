@@ -2674,6 +2674,7 @@ MonoBehaviour:
   scoretext: {fileID: 853607323}
   textPrefab: {fileID: 8087939080395729230, guid: ee759516870cdf9419c7e36d8588fd99, type: 3}
   holder: {fileID: 6656654041719299125}
+  gameGrid: {fileID: 1616609105}
   parent: {fileID: 624970555}
   spawnX: 0
   spawnY: 0
