@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour
 {
@@ -21,8 +18,10 @@ public class Timer : MonoBehaviour
 
     public bool isPaused = false;
     public GameGrid gameGrid;
+    public Progression progression;
 
-    // Start is called before the first frame update
+    private bool gameplayStarted = false;
+
     void Start()
     {
         remainingtime = countdowntime;
@@ -31,7 +30,6 @@ public class Timer : MonoBehaviour
         gameGrid.enabled = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(!isPaused)
@@ -53,6 +51,12 @@ public class Timer : MonoBehaviour
                 gameGrid.enabled = true;
                 countdowntime -= Time.deltaTime;
                 countdownText.text = countdowntime.ToString("F0");
+
+                if (!gameplayStarted)
+                {
+                    gameplayStarted = true;
+                    progression.OnGameplayStarted();
+                }
             }
 
             if(countdowntime <= 0)
@@ -84,6 +88,7 @@ public class Timer : MonoBehaviour
             pausePanel.SetActive(false);
             readytime = 3;
             readyText.enabled = true;
+            gameplayStarted = false;
             isPaused = false;
         }
         else

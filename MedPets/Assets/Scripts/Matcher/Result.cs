@@ -29,7 +29,15 @@ public class Result : MonoBehaviour
     void Start()
     {
         posX = parent.localPosition.x;
+
         int[] items = GameState.Instance.items;
+        // check if items have been initialized, if not initialize them and get the reference again
+        if (items == null || items.Length == 0)
+        {
+            GameState.Instance.InitItems(holder.Size);
+            items = GameState.Instance.items;
+        }
+
         MatchSession session = gameGrid.Session;
         results = new int[holder.Size];
 

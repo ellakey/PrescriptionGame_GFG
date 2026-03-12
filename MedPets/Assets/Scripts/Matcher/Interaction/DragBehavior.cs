@@ -11,6 +11,10 @@ public class DragBehavior : MonoBehaviour
     public Color correct;
     public Color wrong;
 
+    [Header("Scoring")]
+    [SerializeField] int basePointsPerBerry = 100;
+    [SerializeField] float chainMultiplier = 1.5f;
+
     [SerializeField] List<Berry> dragged = new List<Berry>();
     bool dragging = false;
     [SerializeField] GameGrid grid;
@@ -134,6 +138,14 @@ public class DragBehavior : MonoBehaviour
         return chains;
     }
 
+    private int CalculateScore(int berryCount, int chains)
+    {
+        // Each additional chain multiplies the score
+        // 1 chain: base, 2 chains: base * multiplier, 3 chains: base * multiplier^2, etc.
+        float multiplier = Mathf.Pow(chainMultiplier, chains - 1);
+        return Mathf.RoundToInt(berryCount * basePointsPerBerry * multiplier);
+    }
+
     public void OnUp()
     {
         dragging = false;
@@ -141,6 +153,7 @@ public class DragBehavior : MonoBehaviour
         int chains = CheckList();
         if (chains != -1)
         {
+            int berryCount = dragged.Count;
             int[,] loc = new int[dragged.Count, 2];
             for (int i = 0; i < dragged.Count; i++)
             {
@@ -149,7 +162,7 @@ public class DragBehavior : MonoBehaviour
             }
             ClearAdded();
             rightaudio.Play();
-            grid.AddScore(dragged.Count * 100);
+            grid.AddScore(CalculateScore(berryCount, chains));
             int[] removed = grid.RemoveGroup(loc);
             int[] counts = grid.Session.ItemCounts;
             int count = 0;
@@ -220,5 +233,28 @@ public class DragBehavior : MonoBehaviour
     public void AddDragged(GameObject obj)
     {
         dragged.Add(obj.GetComponent<Berry>());
+    }
+
+    /// <summary>
+    /// Returns true if the given berry is the second-to-last in the drag chain.
+    /// Used by TouchOver to detect when the player drags back to undo.
+    /// </summary>
+    public bool IsSecondToLast(Berry berry)
+    {
+        return dragged.Count >= 2 && dragged[dragged.Count - 2] == berry;
+    }
+
+    /// <summary>
+    /// Removes the last berry from the chain (undo).
+    /// Called by TouchOver when the player drags back over the previous berry.
+    /// </summary>
+    public void UndoLast()
+    {
+        if (dragged.Count < 2) return;
+
+        Berry last = dragged[dragged.Count - 1];
+        last.Added = false;
+        dragged.RemoveAt(dragged.Count - 1);
+        DrawLines();
     }
 }

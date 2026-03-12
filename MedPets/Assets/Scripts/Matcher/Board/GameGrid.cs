@@ -99,7 +99,6 @@ public class GameGrid : MonoBehaviour
         }
         Gravity();
         FillBoard(berries);
-        AddScore((int)(removed.Length * (removed.Length * 0.8)));
         return removed;
     }
 
@@ -107,6 +106,7 @@ public class GameGrid : MonoBehaviour
     {
         Session.AddScore(amount);
         scoretext.text = Session.Score.ToString("D6");
+        progression.NotifyScored();
     }
 
     public GameObject Get(int x, int y)
