@@ -94,7 +94,7 @@ public class Tutorial : MonoBehaviour
         {
             for (int j = 0; j < languageCount; j++)
             {
-                script[i, j] = currentData[languageCount * (i + languageCount) + j];
+                script[i, j] = currentData[languageCount * (i + languageCount) + j].Trim('"');
             }
         }
     }

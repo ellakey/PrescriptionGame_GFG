@@ -10,6 +10,15 @@ public class SetLanguageText : MonoBehaviour
 
     private void Update()
     {
-        textToChange.text = Tutorial.script[textLine - 3, Tutorial.language];
+        var s = Tutorial.script;
+        if (s == null) return;
+
+        int index = textLine - Tutorial.HeaderRows;
+        if (index < 0 || index >= s.GetLength(0)) return;
+
+        int lang = Tutorial.language;
+        if (lang < 0 || lang >= s.GetLength(1)) return;
+
+        textToChange.text = s[index, lang];
     }
 }
