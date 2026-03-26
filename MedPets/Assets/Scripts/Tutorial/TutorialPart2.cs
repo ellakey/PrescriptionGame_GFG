@@ -47,8 +47,6 @@ public class TutorialPart2 : MonoBehaviour
 
     private void Start()
     {
-        countdownAnimation.SetActive(false);
-        
         GameState gs = GameState.Instance;
 
         if (gs == null || gs.tutorialStep != 2)
@@ -57,6 +55,8 @@ public class TutorialPart2 : MonoBehaviour
             enabled = false;
             return;
         }
+
+        countdownAnimation.SetActive(false);
 
         // Get Part 2 CSV lines
         if (gs.tutorialPartStarts == null || gs.tutorialPartStarts.Length < 2 || gs.script == null)

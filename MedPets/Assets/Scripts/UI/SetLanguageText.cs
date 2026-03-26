@@ -13,7 +13,21 @@ public class SetLanguageText : MonoBehaviour
     public int lineInSection;
 
     public TextMeshProUGUI textToChange;
-    public bool setToCaps = false;
+
+    private float originalFontSize;
+    private bool initialized;
+
+    private void Start()
+    {
+        if (textToChange != null)
+        {
+            originalFontSize = textToChange.fontSize;
+            textToChange.enableAutoSizing = true;
+            textToChange.fontSizeMin = 8f;
+            textToChange.fontSizeMax = originalFontSize;
+            initialized = true;
+        }
+    }
 
     private void Update()
     {
@@ -32,9 +46,6 @@ public class SetLanguageText : MonoBehaviour
         int lang = gs.language;
         if (lang < 0 || lang >= s.GetLength(1)) return;
 
-        if(setToCaps)
-            textToChange.text = s[row, lang].ToUpperInvariant();
-        else
-            textToChange.text = s[row, lang];
+        textToChange.text = s[row, lang];
     }
 }
