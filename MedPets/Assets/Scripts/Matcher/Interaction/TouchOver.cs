@@ -13,6 +13,7 @@ public class TouchOver : MonoBehaviour
     private void OnMouseOver()
     {
         if (!drag.IsDragging) return;
+        if (drag.TutorialFingerActive) return;
 
         if (!berry.Added)
         {

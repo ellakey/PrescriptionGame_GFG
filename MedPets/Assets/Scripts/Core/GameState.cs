@@ -36,11 +36,42 @@ public class GameState : MonoBehaviour
     [Header("Progression")]
     public int progressionCounter;
 
-    /// <summary>
-    /// Runs before any scene loads, even before Awake().
-    /// If no GameState exists yet (e.g. hitting Play from a non-Title scene),
-    /// creates one so all other scripts can safely access GameState.Instance.
-    /// </summary>
+    [Header("Tutorial")]
+    public int tutorialStep;
+    public int[] tutorialPartStarts;
+
+    [Header("CSV Sections")]
+
+    public string[] sectionNames;
+    public int[] sectionStarts;
+
+    public int GetSectionStart(string name)
+    {
+        if (sectionNames == null || string.IsNullOrEmpty(name)) return -1;
+        string search = name.Trim().ToUpperInvariant();
+        for (int i = 0; i < sectionNames.Length; i++)
+        {
+            if (sectionNames[i].Trim().ToUpperInvariant() == search)
+                return sectionStarts[i];
+        }
+        return -1;
+    }
+
+    public int GetSectionLength(string name)
+    {
+        if (sectionNames == null || script == null || string.IsNullOrEmpty(name)) return 0;
+        string search = name.Trim().ToUpperInvariant();
+        for (int i = 0; i < sectionNames.Length; i++)
+        {
+            if (sectionNames[i].Trim().ToUpperInvariant() != search) continue;
+
+            int start = sectionStarts[i];
+            int end = (i + 1 < sectionStarts.Length) ? sectionStarts[i + 1] : script.GetLength(0);
+            return end - start;
+        }
+        return 0;
+    }
+
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void AutoBootstrap()
     {
@@ -48,7 +79,6 @@ public class GameState : MonoBehaviour
 
         GameObject go = new GameObject("GameState (Auto)");
         go.AddComponent<GameState>();
-        // Awake() handles the rest: sets Instance, DontDestroyOnLoad, loads save data
     }
 
     private void Awake()
@@ -61,7 +91,6 @@ public class GameState : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // Auto-load saved data on startup
         SaveSystem.LoadPet();
     }
 
@@ -77,7 +106,6 @@ public class GameState : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Auto-save when transitioning between scenes
         SaveSystem.SavePet();
     }
 
@@ -91,7 +119,7 @@ public class GameState : MonoBehaviour
         SaveSystem.SavePet();
     }
 
-    // --- Patient Info helpers (moved from static PatientInfo) ---
+    // --- Patient Info helpers ---
 
     public void SetMedId(int id)
     {
@@ -127,7 +155,7 @@ public class GameState : MonoBehaviour
         SaveSystem.SavePet();
     }
 
-    // --- Needs helpers (moved from NeedsController statics) ---
+    // --- Needs helpers ---
 
     public void ChangeFood(int amount)
     {

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Text.RegularExpressions;
 
 public class Tutorial : MonoBehaviour
 {
@@ -40,6 +41,9 @@ public class Tutorial : MonoBehaviour
     private bool nameChangeable = false;
     private string currentName;
 
+    // Matches section headers like "1 . TUTORIAL", "2 . GAME WORDS", "4 . GUIDEBOOK"
+    private static readonly Regex SectionHeaderPattern = new Regex(@"^\d+\s*\.\s*(.+)$");
+
     private void Start()
     {
         Instance = this;
@@ -48,6 +52,10 @@ public class Tutorial : MonoBehaviour
         ReadCSV();
         lastPanel = 0;
         currentLoc = 0;
+
+        // Intro lines start at row 0 (before any PART header)
+        currentText = 0;
+
         for (int i = 0; i < progression.Length; i++)
         {
             panels.Add(Instantiate(prefabs[progression[i]], parent.transform));
@@ -87,16 +95,126 @@ public class Tutorial : MonoBehaviour
 
     private void ReadCSV()
     {
-        string[] currentData;
-        currentData = tutorialScript.text.Split(new string[] { "\t", "\n" }, StringSplitOptions.RemoveEmptyEntries);
-        script = new string[(currentData.Length / languageCount) - (languageCount * 2) + 2, languageCount];
-        for (int i = 0; i <= (currentData.Length / languageCount) - (languageCount * 2) + 1; i++)
+        string[] lines = tutorialScript.text.Split('\n');
+
+        List<string[]> contentRows = new List<string[]>();
+        List<int> partStarts = new List<int>();
+        List<string> secNames = new List<string>();
+        List<int> secStarts = new List<int>();
+
+        foreach (string rawLine in lines)
+        {
+            if (string.IsNullOrWhiteSpace(rawLine)) continue;
+
+            // Strip all quote characters (CSV quoting artifacts, also fixes
+            // broken quoting from commas in Spanish text)
+            string line = rawLine.Replace("\"", "");
+
+            // Strip trailing commas (empty spreadsheet columns)
+            line = line.TrimEnd(',').Trim();
+
+            if (string.IsNullOrEmpty(line)) continue;
+
+            // --- Detect PART headers: "PART 1: PET STATS---" ---
+            if (line.StartsWith("PART ", StringComparison.OrdinalIgnoreCase))
+            {
+                partStarts.Add(contentRows.Count);
+                continue;
+            }
+
+            // Skip the language header row (e.g. "English (Revised)\tSpanish (Revised)")
+            if (line.IndexOf("English", StringComparison.OrdinalIgnoreCase) >= 0 &&
+                line.IndexOf("Spanish", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                continue;
+            }
+
+            // Split by tab to get language columns
+            string[] cols = line.Split('\t');
+            string firstCol = cols[0].Trim();
+
+            // --- Detect section headers: "N . NAME" with dashes in second column ---
+            // (e.g. "2 . GAME WORDS\t-------")
+            Match sectionMatch = SectionHeaderPattern.Match(firstCol);
+            if (sectionMatch.Success)
+            {
+                // Check that second column is all dashes or the row has only one real column
+                bool isDashColumn = cols.Length >= 2 && IsDecorative(cols[1].Trim());
+                bool isSingleColumn = cols.Length < languageCount;
+
+                if (isDashColumn || isSingleColumn)
+                {
+                    string name = sectionMatch.Groups[1].Value.Trim();
+                    // Strip any trailing dashes from the name itself
+                    name = name.TrimEnd('-').Trim();
+                    secNames.Add(name);
+                    secStarts.Add(contentRows.Count);
+                    continue;
+                }
+            }
+
+            // --- Content row: must have at least languageCount non-empty columns ---
+            if (cols.Length < languageCount) continue;
+
+            bool isContent = true;
+            for (int j = 0; j < languageCount; j++)
+            {
+                string cell = cols[j].Trim();
+                if (string.IsNullOrEmpty(cell) || IsDecorative(cell))
+                {
+                    isContent = false;
+                    break;
+                }
+            }
+            if (!isContent) continue;
+
+            string[] cleaned = new string[languageCount];
+            for (int j = 0; j < languageCount; j++)
+            {
+                cleaned[j] = cols[j].Trim();
+            }
+            contentRows.Add(cleaned);
+        }
+
+        // Build script array
+        script = new string[contentRows.Count, languageCount];
+        for (int i = 0; i < contentRows.Count; i++)
         {
             for (int j = 0; j < languageCount; j++)
             {
-                script[i, j] = currentData[languageCount * (i + languageCount) + j].Trim('"');
+                script[i, j] = contentRows[i][j];
             }
         }
+
+        // Store on GameState
+        GameState gs = GameState.Instance;
+        gs.tutorialPartStarts = partStarts.ToArray();
+        gs.sectionNames = secNames.ToArray();
+        gs.sectionStarts = secStarts.ToArray();
+
+        // Debug log for verification
+        for (int s = 0; s < secNames.Count; s++)
+        {
+            int start = secStarts[s];
+            string preview = (start < contentRows.Count) ? script[start, 0] : "(empty)";
+            Debug.Log($"[CSV] Section \"{secNames[s]}\" starts at row {start}: \"{preview}\"");
+        }
+        for (int p = 0; p < partStarts.Count; p++)
+        {
+            int start = partStarts[p];
+            string preview = (start < contentRows.Count) ? script[start, 0] : "(empty)";
+            Debug.Log($"[CSV] PART {p + 1} starts at row {start}: \"{preview}\"");
+        }
+    }
+
+    private static bool IsDecorative(string cell)
+    {
+        if (cell.Length == 0) return false;
+        foreach (char c in cell)
+        {
+            if (c != '-' && c != ' ') return false;
+        }
+        return true;
     }
 
     private void Move()
@@ -142,6 +260,13 @@ public class Tutorial : MonoBehaviour
         }
         else
         {
+            // Intro tutorial done — advance step so PART 1 triggers on Pet scene
+            GameState gs = GameState.Instance;
+            if (gs.tutorialStep < 1)
+            {
+                gs.tutorialStep = 1;
+                SaveSystem.SavePet();
+            }
             mainMenu.ToPet();
         }
     }

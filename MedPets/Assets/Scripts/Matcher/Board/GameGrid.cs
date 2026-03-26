@@ -15,6 +15,12 @@ public class GameGrid : MonoBehaviour
     public MatchSession Session { get; private set; }
     public TextMeshProUGUI scoretext;
 
+    // --- Exposed for TutorialPart2 ---
+    public BerryHolder Holder => holder;
+    public BerryMover Mover => mover;
+    public Transform Parent => parent;
+    public int[] Berries => berries;
+
     public int Width
     {
         get => width;
@@ -112,5 +118,32 @@ public class GameGrid : MonoBehaviour
     public GameObject Get(int x, int y)
     {
         return board[x, y];
+    }
+
+    /// <summary>
+    /// Replaces the tile at (x,y) with a specific berry type.
+    /// Used by the tutorial to rig the board.
+    /// </summary>
+    public void ReplaceTile(int x, int y, int berryId)
+    {
+        if (board[x, y] != null)
+            Destroy(board[x, y]);
+
+        GameObject tile = Instantiate(
+            holder.GetBerry(berryId),
+            Vector2.zero,
+            Quaternion.identity,
+            parent
+        );
+
+        RectTransform rt = tile.GetComponent<RectTransform>();
+        rt.localScale = new Vector2(mover.Scale, mover.Scale);
+        rt.localPosition = new Vector2(mover.ConvertX(x), mover.ConvertY(y));
+
+        Berry berry = tile.GetComponent<Berry>();
+        berry.locX = x;
+        berry.locY = y;
+
+        board[x, y] = tile;
     }
 }

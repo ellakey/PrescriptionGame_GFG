@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +30,10 @@ public class DragBehavior : MonoBehaviour
 
     public bool IsDragging => dragging;
 
+    public bool TutorialFingerActive { get; set; }
+
+    public Action<int> OnMatchCompleted;
+
     void Awake()
     {
         mainCam = Camera.main;
@@ -36,6 +41,9 @@ public class DragBehavior : MonoBehaviour
 
     private void Update()
     {
+        // Skip mouse tracking while tutorial finger is in control
+        if (TutorialFingerActive) return;
+
         Vector3 mouseWorldPos = mainCam.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0f;
         transform.position = mouseWorldPos;
@@ -140,8 +148,6 @@ public class DragBehavior : MonoBehaviour
 
     private int CalculateScore(int berryCount, int chains)
     {
-        // Each additional chain multiplies the score
-        // 1 chain: base, 2 chains: base * multiplier, 3 chains: base * multiplier^2, etc.
         float multiplier = Mathf.Pow(chainMultiplier, chains - 1);
         return Mathf.RoundToInt(berryCount * basePointsPerBerry * multiplier);
     }
@@ -176,6 +182,10 @@ public class DragBehavior : MonoBehaviour
                     count++;
                 }
             }
+
+            // Notify listeners (tutorial) about the successful match
+            OnMatchCompleted?.Invoke(berryCount);
+
             dragged.Clear();
         }
         else

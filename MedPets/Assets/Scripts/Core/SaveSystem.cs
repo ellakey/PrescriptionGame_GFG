@@ -25,10 +25,13 @@ public static class SaveSystem
         }
         PlayerPrefs.SetInt("MedAmount", gs.medications.Count);
         PlayerPrefs.SetInt("Progression", gs.progressionCounter);
+        PlayerPrefs.SetInt("TutorialStep", gs.tutorialStep);
         SetBool("PetVisited", gs.playedOnce);
         PlayerPrefs.SetString("PetName", gs.petName);
         PlayerPrefs.SetInt("Language", gs.language);
         SaveScript(gs);
+        SavePartStarts(gs);
+        SaveSections(gs);
         PlayerPrefs.Save();
     }
 
@@ -51,6 +54,7 @@ public static class SaveSystem
 
         int medAmount = PlayerPrefs.GetInt("MedAmount", 0);
         gs.progressionCounter = PlayerPrefs.GetInt("Progression", gs.progressionCounter);
+        gs.tutorialStep = PlayerPrefs.GetInt("TutorialStep", gs.tutorialStep);
         gs.playedOnce = GetBool("PetVisited", gs.playedOnce);
         gs.petName = PlayerPrefs.GetString("PetName", gs.petName);
         gs.language = PlayerPrefs.GetInt("Language", gs.language);
@@ -64,17 +68,64 @@ public static class SaveSystem
         }
 
         LoadScript(gs);
+        LoadPartStarts(gs);
+        LoadSections(gs);
     }
 
-    private static void SetBool(string name, bool value)
+    // --- Tutorial part starts ---
+
+    private static void SavePartStarts(GameState gs)
     {
-        PlayerPrefs.SetInt(name, value ? 1 : 0);
+        int count = (gs.tutorialPartStarts != null) ? gs.tutorialPartStarts.Length : 0;
+        PlayerPrefs.SetInt("TutPartCount", count);
+        for (int i = 0; i < count; i++)
+        {
+            PlayerPrefs.SetInt("TutPart" + i, gs.tutorialPartStarts[i]);
+        }
     }
 
-    private static bool GetBool(string name, bool dflt)
+    private static void LoadPartStarts(GameState gs)
     {
-        return PlayerPrefs.GetInt(name, 0) == 1;
+        int count = PlayerPrefs.GetInt("TutPartCount", 0);
+        if (count > 0)
+        {
+            gs.tutorialPartStarts = new int[count];
+            for (int i = 0; i < count; i++)
+            {
+                gs.tutorialPartStarts[i] = PlayerPrefs.GetInt("TutPart" + i, 0);
+            }
+        }
     }
+
+    // --- CSV section lookup ---
+
+    private static void SaveSections(GameState gs)
+    {
+        int count = (gs.sectionNames != null) ? gs.sectionNames.Length : 0;
+        PlayerPrefs.SetInt("SecCount", count);
+        for (int i = 0; i < count; i++)
+        {
+            PlayerPrefs.SetString("SecName" + i, gs.sectionNames[i]);
+            PlayerPrefs.SetInt("SecStart" + i, gs.sectionStarts[i]);
+        }
+    }
+
+    private static void LoadSections(GameState gs)
+    {
+        int count = PlayerPrefs.GetInt("SecCount", 0);
+        if (count > 0)
+        {
+            gs.sectionNames = new string[count];
+            gs.sectionStarts = new int[count];
+            for (int i = 0; i < count; i++)
+            {
+                gs.sectionNames[i] = PlayerPrefs.GetString("SecName" + i, "");
+                gs.sectionStarts[i] = PlayerPrefs.GetInt("SecStart" + i, 0);
+            }
+        }
+    }
+
+    // --- Script ---
 
     private static void SaveScript(GameState gs)
     {
@@ -107,12 +158,25 @@ public static class SaveSystem
         }
     }
 
+    // --- Helpers ---
+
+    private static void SetBool(string name, bool value)
+    {
+        PlayerPrefs.SetInt(name, value ? 1 : 0);
+    }
+
+    private static bool GetBool(string name, bool dflt)
+    {
+        return PlayerPrefs.GetInt(name, 0) == 1;
+    }
+
+    // --- Reset ---
+
     public static void Reset()
     {
         PlayerPrefs.DeleteAll();
         ResetAllItems();
 
-        // Also reset in-memory state so the current session reflects the wipe
         GameState gs = GameState.Instance;
         if (gs != null)
         {
@@ -130,6 +194,10 @@ public static class SaveSystem
             gs.language = 0;
             gs.script = null;
             gs.progressionCounter = 0;
+            gs.tutorialStep = 0;
+            gs.tutorialPartStarts = null;
+            gs.sectionNames = null;
+            gs.sectionStarts = null;
             if (gs.items != null)
             {
                 for (int i = 0; i < gs.items.Length; i++)

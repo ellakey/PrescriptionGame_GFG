@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7087298825469928520}
   - component: {fileID: 3861837063844743583}
   - component: {fileID: 7673724916943377904}
+  - component: {fileID: 3064260824638293395}
   m_Layer: 0
   m_Name: Pet
   m_TagString: Untagged
@@ -121,7 +122,9 @@ MonoBehaviour:
   energyBar: {fileID: 0}
   controller: {fileID: 3861837063844743583}
   playGlow: {fileID: 0}
-  meterGlow: {fileID: 0}
+  energyMeterGlow: {fileID: 0}
+  foodMeterGlow: {fileID: 0}
+  bloodMeterGlow: {fileID: 0}
 --- !u!114 &3861837063844743583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,6 +138,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   petAnimator: {fileID: 4024992909718604611}
+  petSprite: {fileID: 0}
+  happySprite: {fileID: 0}
+  hungrySprite: {fileID: 0}
+  happyDuration: 1.5
 --- !u!222 &7673724916943377904
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -143,3 +150,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4239865502826848705}
   m_CullTransparentMesh: 1
+--- !u!60 &3064260824638293395
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4239865502826848705}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0, y: 4.5403824}
+      - {x: -2.0389528, y: 3.9379842}
+      - {x: -4.6082706, y: 3.4326334}
+      - {x: -6.6616926, y: 0.47527474}
+      - {x: -5.611971, y: -1.4227915}
+      - {x: -4.565645, y: -1.1197869}
+      - {x: -3.5921302, y: -2.0476723}
+      - {x: -2.2558844, y: -2.4530182}
+      - {x: -2.6097631, y: -4.144577}
+      - {x: -1.4964018, y: -4.650044}
+      - {x: -0.9990934, y: -5.2341585}
+      - {x: 1.3353583, y: -5.231365}
+      - {x: 1.6244311, y: -4.8174424}
+      - {x: 3.2431483, y: -4.815399}
+      - {x: 3.6123338, y: -3.181176}
+      - {x: 2.711026, y: -2.4633222}
+      - {x: 4.288761, y: -2.0731158}
+      - {x: 4.504829, y: -0.9826462}
+      - {x: 5.8003454, y: -1.4822071}
+      - {x: 6.511218, y: -0.2632141}
+      - {x: 2.6804807, y: 4.0687156}
+  m_UseDelaunayMesh: 0
