@@ -50,12 +50,12 @@ public class Berry : MonoBehaviour
         get
         {
             Debug.Log("Language: " + PlayerPrefs.GetInt("Language"));
-            return data.name[PlayerPrefs.GetInt("Language")];
+            return data.localizedNames[PlayerPrefs.GetInt("Language")];
         }
     }
 
     public string DataDescription =>
-        data.description[PlayerPrefs.GetInt("Language")];
+        data.localizedDescriptions[PlayerPrefs.GetInt("Language")];
 
     public Sprite DataSprite => data.sprite;
 

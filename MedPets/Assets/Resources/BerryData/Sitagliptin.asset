@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a14c7e0b2f26481988f27e5f210668d, type: 3}
-  m_Name: Sitagliptin
+  m_Name: S01_BerryData
   m_EditorClassIdentifier: 
-  ID: 
-  name:
+  ID: S01
+  localizedNames:
   - Sitagliptin
-  - Sitagliptin but in spanish
-  description:
-  - sdgvae
+  - S
+  localizedDescriptions:
+  - English Description
+  - Spanish Description
   sprite: {fileID: 21300000, guid: d89179410a094834a97ec592cb7cfbd0, type: 3}
   hasBeenUsed: 0

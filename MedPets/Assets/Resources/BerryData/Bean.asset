@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a14c7e0b2f26481988f27e5f210668d, type: 3}
-  m_Name: Bean
+  m_Name: B01_BerryData
   m_EditorClassIdentifier: 
-  ID: 
-  name:
+  ID: B01
+  localizedNames:
   - Bean
-  description:
-  - Description
+  - B
+  localizedDescriptions:
+  - English Description
+  - Spanish Description
   sprite: {fileID: 21300000, guid: 916a6907f8ff32548add8171a6981a68, type: 3}
   hasBeenUsed: 0

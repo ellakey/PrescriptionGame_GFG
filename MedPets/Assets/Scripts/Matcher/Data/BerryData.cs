@@ -6,8 +6,8 @@ using UnityEngine;
 public class BerryData : ScriptableObject
 {
     public string ID;
-    public string[] name;
-    public string[] description;
+    public string[] localizedNames;
+    public string[] localizedDescriptions;
     public Sprite sprite;
     public bool hasBeenUsed = false;
 

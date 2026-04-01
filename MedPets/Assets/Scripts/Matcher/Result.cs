@@ -21,6 +21,8 @@ public class Result : MonoBehaviour
 
     public int[] results;
 
+    public int MaxPan => maxPan;
+
     private int maxPan;
     private int pan;
     private float posX;
