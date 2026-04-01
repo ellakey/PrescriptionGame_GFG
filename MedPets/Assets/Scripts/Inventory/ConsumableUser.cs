@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class ConsumableUser : MonoBehaviour
 {
     public GameObject item;
     public Animator petAnim;
+
+    public static event Action<Berry> OnItemUsed;
 
     private void Start()
     {
@@ -14,6 +15,7 @@ public class ConsumableUser : MonoBehaviour
 
     public void UseItem()
     {
+        Debug.Log("Using item: " + item.name);
         Berry berry = item.GetComponent<Berry>();
         GameState gs = GameState.Instance;
 
@@ -38,5 +40,7 @@ public class ConsumableUser : MonoBehaviour
             Destroy(gameObject);
         }
         SaveSystem.SavePet();
+
+        OnItemUsed?.Invoke(berry);
     }
 }

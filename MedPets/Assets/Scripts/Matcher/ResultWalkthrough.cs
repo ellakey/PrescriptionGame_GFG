@@ -19,6 +19,7 @@ public class ResultWalkthrough : MonoBehaviour
     [SerializeField] private Button rightButton;
     [SerializeField] private Button leftButton;
     [SerializeField] private Button petButton;
+    [SerializeField] private GameObject petButtonGlow;
 
     [Header("Timing")]
     [SerializeField] private float initialDelay = 1.5f;
@@ -34,6 +35,7 @@ public class ResultWalkthrough : MonoBehaviour
 
     private void Start()
     {
+        petButtonGlow.SetActive(false);
         // Only run during tutorial rounds
         // progressionCounter was already incremented by Result.Start(),
         // so check <= maxTutorialRound to cover rounds that started at 0..maxTutorialRound-1
@@ -41,6 +43,11 @@ public class ResultWalkthrough : MonoBehaviour
         {
             StartCoroutine(RunWalkthrough());
         }
+    }
+
+    private void OnDisable()
+    {
+        petButtonGlow.SetActive(false);
     }
 
     private IEnumerator RunWalkthrough()
@@ -59,7 +66,7 @@ public class ResultWalkthrough : MonoBehaviour
         // Disable buttons during walkthrough
         rightButton.interactable = false;
         leftButton.interactable = false;
-        petButton.interactable = false;
+        //petButton.interactable = false;
 
         // Wait for results to settle on screen
         yield return new WaitForSeconds(initialDelay);
@@ -82,6 +89,8 @@ public class ResultWalkthrough : MonoBehaviour
             // Wait for scroll animation + linger
             yield return new WaitForSeconds(lingerTime);
         }
+
+        petButtonGlow.SetActive(true);
 
         // Move pointer to the Pet button
         yield return StartCoroutine(MovePointerTo(petButton.GetComponent<RectTransform>()));

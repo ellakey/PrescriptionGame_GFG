@@ -31,6 +31,9 @@ public class TutorialPart1 : MonoBehaviour
     [Header("Glow Pulse")]
     public float pulseSpeed = 3f;
 
+    [Header("Button Disable")]
+    public Button[] buttonsToDisable;
+
     private int currentLine;
     private int startRow;
     private int lineCount;
@@ -41,6 +44,8 @@ public class TutorialPart1 : MonoBehaviour
 
     private void Start()
     {
+        bloodSugarGlow.SetActive(false);
+        playButtonGlow.SetActive(false);
         GameState gs = GameState.Instance;
 
         if (gs == null || gs.tutorialStep != 1)
@@ -52,6 +57,15 @@ public class TutorialPart1 : MonoBehaviour
 
         // Make sure blood sugar is high for the tutorial
         if (gs.blood < 180) gs.blood = 200;
+
+        // disable buttons
+        if (buttonsToDisable != null)
+        {
+            foreach (Button btn in buttonsToDisable)
+            {
+                if (btn != null) btn.interactable = false;
+            }
+        }
 
         // Get Part 1 line range
         if (gs.tutorialPartStarts == null || gs.tutorialPartStarts.Length < 1 || gs.script == null)
@@ -104,6 +118,21 @@ public class TutorialPart1 : MonoBehaviour
         {
             waitingForTap = false;
             AdvanceDialogue();
+        }
+    }
+
+    void OnDisable()
+    {
+        if(bloodSugarGlow != null) bloodSugarGlow.SetActive(false);
+        if(playButtonGlow != null) playButtonGlow.SetActive(false);
+
+        // disable buttons
+        if (buttonsToDisable != null)
+        {
+            foreach (Button btn in buttonsToDisable)
+            {
+                if (btn != null) btn.interactable = true;
+            }
         }
     }
 
